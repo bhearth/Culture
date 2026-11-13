@@ -1,0 +1,2137 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="artifact-type" content="narrative">
+  <meta name="design-style" content="canopy">
+  <title>वृद्धावस्था से स्वर्णयुग — वानप्रस्थ का पुनराविष्कार</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&family=Literata:ital,opsz,wght@0,7..72,400..700;1,7..72,400..600&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;600;700&family=Noto+Serif+Devanagari:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      color-scheme: light;
+
+      /* Page and surfaces (earth strata) */
+      --background: #faf6ef;
+      --surface-container-low: #f0eae0;
+      --surface-container: #e8e0d2;
+      --surface-container-high: #ddd3c2;
+
+      /* Ink */
+      --on-surface: #2a302b;
+      --on-surface-variant: #4a524b;
+
+      /* Lines */
+      --outline: #737872;
+      --outline-variant: #cbc5b8;
+
+      /* Accents */
+      --primary: #366948;
+      --on-primary: #ffffff;
+      --primary-container: #d8efe0;
+      --on-primary-container: #1f4d30;
+      --secondary: #5c635c;
+      --tertiary: #8f5822;
+      --tertiary-container: #f2d4a7;
+      --on-tertiary-container: #6e3f0c;
+      --error: #b83230;
+      --error-container: #fae5e5;
+      --on-error-container: #7c1c1a;
+      --on-error: #ffffff;
+
+      /* Data series */
+      --data-1: #366948;
+      --data-2: #8f5822;
+      --data-3: #a85438;
+      --data-4: #4b6b78;
+      --data-context: #b5b0a3;
+
+      /* Fonts (Devanagari listed first per non-Latin rules) */
+      --font-headline: 'Noto Serif Devanagari', 'Literata', serif;
+      --font-body: 'Noto Sans Devanagari', 'Nunito Sans', sans-serif;
+      --font-label: 'Noto Sans Devanagari', 'Geist Mono', monospace;
+      --font-mono-num: 'Geist Mono', 'Noto Sans Devanagari', monospace;
+
+      /* Shape */
+      --rounded: 0.625rem;
+      --rounded-lg: 1rem;
+      --rounded-sm: 0.375rem;
+      --rounded-full: 9999px;
+
+      /* Style effects */
+      --shadow-soft: 0 4px 20px rgb(42 48 43 / 0.06);
+      --shadow-soft-hover: 0 8px 28px rgb(42 48 43 / 0.09);
+      --border-soft: 1px solid rgb(203 197 184 / 0.65);
+      --focus-glow: 0 0 0 4px rgb(54 105 72 / 0.18);
+
+      /* Shared semantic & focus tokens */
+      --positive: #366948;
+      --warning: #8f5822;
+      --focus: #366948;
+
+      /* Narrative Type Scale */
+      --display-size: clamp(2.15rem, 1.35rem + 3.2vw, 3.6rem);
+      --headline-size: clamp(1.5rem, 1.15rem + 1.5vw, 2.25rem);
+      --subhead-size: clamp(1.15rem, 1.02rem + 0.55vw, 1.4rem);
+      --body-size: clamp(1rem, 0.96rem + 0.25vw, 1.125rem);
+      --label-size: clamp(0.75rem, 0.72rem + 0.15vw, 0.85rem);
+
+      /* Spacing scale */
+      --space-xs: 0.25rem;
+      --space-sm: 0.5rem;
+      --space-md: 1rem;
+      --space-lg: 1.5rem;
+      --space-xl: 2.5rem;
+      --space-2xl: 4rem;
+      --space-3xl: 5.5rem;
+
+      /* Motion */
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+      --dur-micro: 120ms;
+      --dur-short: 220ms;
+      --dur-long: 420ms;
+    }
+
+    /* Base reset */
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body {
+      overflow-x: clip;
+      margin: 0;
+      padding: 0;
+      background-color: var(--background);
+      color: var(--on-surface);
+      font-family: var(--font-body);
+      font-size: var(--body-size);
+      line-height: 1.68;
+      -webkit-font-smoothing: antialiased;
+    }
+    header { position: static !important; }
+
+    button, input, select, textarea {
+      font-family: inherit;
+      font-size: inherit;
+      color: inherit;
+    }
+
+    :focus-visible {
+      outline: 2px solid var(--focus);
+      outline-offset: 2px;
+      box-shadow: var(--focus-glow);
+    }
+
+    .page-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-2xl);
+      padding: var(--space-xl) var(--space-lg) var(--space-3xl);
+      max-width: 1160px;
+      margin: 0 auto;
+      overflow: hidden;
+    }
+    .page-grid * { min-width: 0; }
+
+    /* Typography helpers (Devanagari: letter-spacing 0, text-transform none) */
+    h1, h2, h3, h4 {
+      font-family: var(--font-headline);
+      color: var(--on-surface);
+      margin: 0;
+      letter-spacing: 0;
+      text-transform: none;
+    }
+    h1 {
+      font-size: var(--display-size);
+      font-weight: 700;
+      line-height: 1.22;
+    }
+    h2 {
+      font-size: var(--headline-size);
+      font-weight: 600;
+      line-height: 1.28;
+    }
+    h3 {
+      font-size: var(--subhead-size);
+      font-weight: 600;
+      line-height: 1.35;
+    }
+    p {
+      margin: 0;
+      max-width: 68ch;
+      color: var(--on-surface);
+    }
+    .muted {
+      color: var(--on-surface-variant);
+    }
+    .kicker {
+      display: inline-block;
+      font-family: var(--font-body);
+      font-weight: 700;
+      font-size: var(--label-size);
+      color: var(--tertiary);
+      margin-bottom: var(--space-sm);
+      letter-spacing: 0;
+      text-transform: none;
+    }
+    .mono-num {
+      font-family: var(--font-mono-num);
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+
+    /* Hero & Header */
+    .hero-block {
+      display: grid;
+      grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr);
+      gap: var(--space-xl);
+      align-items: start;
+      padding-bottom: var(--space-lg);
+      border-bottom: var(--border-soft);
+    }
+    .hero-copy {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+    .hero-subtitle {
+      font-size: clamp(1.0625rem, 1rem + 0.35vw, 1.25rem);
+      color: var(--on-surface-variant);
+      line-height: 1.65;
+      max-width: 60ch;
+    }
+    .sanskrit-epigraph {
+      background: var(--surface-container-low);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-lg);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+    .epigraph-verse {
+      font-family: var(--font-headline);
+      font-size: var(--subhead-size);
+      font-weight: 600;
+      color: var(--primary);
+      line-height: 1.45;
+    }
+    .epigraph-meaning {
+      font-size: 0.95rem;
+      color: var(--on-surface-variant);
+      line-height: 1.6;
+    }
+
+    /* Quick Jump Anchor Nav */
+    .section-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+      margin-top: var(--space-xs);
+    }
+    .nav-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      min-height: 44px;
+      padding: var(--space-sm) var(--space-md);
+      background: var(--surface-container-low);
+      color: var(--on-surface);
+      border-radius: var(--rounded);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.925rem;
+      transition: background-color var(--dur-short) var(--ease-out), transform var(--dur-short) var(--ease-out);
+    }
+    .nav-pill:hover {
+      background: var(--surface-container-high);
+      transform: translateY(-1px);
+    }
+
+    /* Canopy Signature Almanac / Lifespan Phenology Strip */
+    .season-strip {
+      background: var(--surface-container-low);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-md) var(--space-lg);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-md);
+    }
+    .season-meta {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+    .season-title {
+      font-family: var(--font-body);
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--on-surface);
+    }
+    .season-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-md);
+      font-size: 0.85rem;
+      color: var(--on-surface-variant);
+    }
+    .legend-dot {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border-radius: 3px;
+      margin-left: 0;
+      margin-right: 6px;
+      vertical-align: middle;
+    }
+    .legend-dot.prep { background: var(--tertiary-container); }
+    .legend-dot.peak { background: var(--primary); }
+    .legend-dot.rest { background: var(--surface-container-high); }
+
+    .season-cells {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-xs);
+    }
+    .season-cell {
+      min-width: 44px;
+      min-height: 44px;
+      padding: var(--space-xs) var(--space-sm);
+      border: 0;
+      border-radius: var(--rounded-sm);
+      background: var(--surface-container-high);
+      color: var(--on-surface-variant);
+      font-family: var(--font-mono-num);
+      font-size: 0.8125rem;
+      font-weight: 600;
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: transform var(--dur-micro) var(--ease-out), background-color var(--dur-short) var(--ease-out), box-shadow var(--dur-short) var(--ease-out);
+    }
+    .season-cell.is-prep {
+      background: var(--tertiary-container);
+      color: var(--on-tertiary-container);
+    }
+    .season-cell.is-peak {
+      background: var(--primary);
+      color: var(--on-primary);
+    }
+    .season-cell.is-selected {
+      box-shadow: 0 0 0 2px var(--on-surface);
+      transform: translateY(-2px);
+    }
+    .season-cell:hover {
+      transform: translateY(-2px);
+    }
+    .season-cell small {
+      font-family: var(--font-body);
+      font-size: 0.6875rem;
+      font-weight: 600;
+      opacity: 0.9;
+    }
+
+    /* Section Architecture */
+    .story-section {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-lg);
+    }
+    .section-header {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+      max-width: 72ch;
+    }
+    .section-lede {
+      color: var(--on-surface-variant);
+      font-size: 1.05rem;
+    }
+
+    /* Cards (Canopy Loam & Pale Leaf) */
+    .card {
+      background: var(--surface-container-low);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-lg);
+      border: 0;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+    .card.is-interactive {
+      box-shadow: var(--shadow-soft);
+      transition: box-shadow var(--dur-short) var(--ease-out), transform var(--dur-short) var(--ease-out);
+    }
+    .card.is-interactive:hover {
+      box-shadow: var(--shadow-soft-hover);
+      transform: translateY(-2px);
+    }
+    .card.is-leaf-highlight {
+      background: var(--primary-container);
+      color: var(--on-primary-container);
+    }
+    .card.is-leaf-highlight p,
+    .card.is-leaf-highlight h3,
+    .card.is-leaf-highlight .muted {
+      color: var(--on-primary-container);
+    }
+    .card.is-deep-loam {
+      background: var(--surface-container);
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
+      gap: var(--space-lg);
+    }
+    .two-col-asymmetric {
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+      gap: var(--space-lg);
+      align-items: start;
+    }
+    .two-col-balanced {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-lg);
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-sm);
+      min-height: 44px;
+      padding: var(--space-sm) var(--space-lg);
+      border-radius: var(--rounded);
+      border: 0;
+      font-weight: 700;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: background-color var(--dur-short) var(--ease-out), transform var(--dur-micro) var(--ease-out), opacity var(--dur-short) var(--ease-out);
+    }
+    .btn:active {
+      transform: scale(0.98);
+    }
+    .btn:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+    }
+    .btn-primary {
+      background: var(--primary);
+      color: var(--on-primary);
+    }
+    .btn-primary:hover:not(:disabled) {
+      background: var(--on-primary-container);
+    }
+    .btn-secondary {
+      background: var(--surface-container);
+      color: var(--on-surface);
+    }
+    .btn-secondary:hover:not(:disabled) {
+      background: var(--surface-container-high);
+    }
+    .btn-warm {
+      background: var(--tertiary-container);
+      color: var(--on-tertiary-container);
+    }
+    .btn-warm:hover:not(:disabled) {
+      background: var(--surface-container-high);
+    }
+
+    /* Badges & Tags */
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      padding: var(--space-xs) var(--space-sm);
+      border-radius: var(--rounded-sm);
+      font-size: 0.8125rem;
+      font-weight: 700;
+      width: fit-content;
+    }
+    .tag-ochre {
+      background: var(--tertiary-container);
+      color: var(--on-tertiary-container);
+    }
+    .tag-leaf {
+      background: var(--primary-container);
+      color: var(--on-primary-container);
+    }
+    .tag-error {
+      background: var(--error-container);
+      color: var(--on-error-container);
+    }
+
+    /* Stage 1: Lifespan Trajectory Visualization & Stage Inspector */
+    .trajectory-wrap {
+      background: var(--surface-container-low);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-lg);
+      box-shadow: var(--shadow-soft);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+    .trajectory-header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: var(--space-md);
+    }
+    .path-toggle-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+    }
+    .path-btn {
+      min-height: 44px;
+      padding: var(--space-xs) var(--space-md);
+      border-radius: var(--rounded);
+      border: var(--border-soft);
+      background: var(--background);
+      color: var(--on-surface);
+      font-weight: 600;
+      font-size: 0.875rem;
+      cursor: pointer;
+      transition: background-color var(--dur-short) var(--ease-out), color var(--dur-short) var(--ease-out);
+    }
+    .path-btn.is-active-gold {
+      background: var(--primary);
+      color: var(--on-primary);
+      border-color: transparent;
+    }
+    .path-btn.is-active-moha {
+      background: var(--tertiary-container);
+      color: var(--on-tertiary-container);
+      border-color: transparent;
+    }
+
+    .svg-chart-container {
+      width: 100%;
+      min-height: 290px;
+      position: relative;
+    }
+    .svg-chart-container svg {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .stage-selector-row {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: var(--space-sm);
+    }
+    .stage-tab-btn {
+      min-height: 44px;
+      padding: var(--space-sm);
+      border-radius: var(--rounded);
+      border: 0;
+      background: var(--surface-container);
+      color: var(--on-surface);
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      transition: background-color var(--dur-short) var(--ease-out), transform var(--dur-micro) var(--ease-out), box-shadow var(--dur-short) var(--ease-out);
+    }
+    .stage-tab-btn:hover {
+      background: var(--surface-container-high);
+      transform: translateY(-1px);
+    }
+    .stage-tab-btn.is-active {
+      background: var(--primary);
+      color: var(--on-primary);
+      box-shadow: var(--shadow-soft);
+    }
+    .stage-tab-btn.is-active .stage-age {
+      color: var(--primary-container);
+    }
+    .stage-age {
+      font-family: var(--font-mono-num);
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--tertiary);
+    }
+    .stage-name {
+      font-weight: 700;
+      font-size: 0.925rem;
+    }
+
+    .stage-detail-panel {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+      gap: var(--space-lg);
+      background: var(--background);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-lg);
+      border: var(--border-soft);
+    }
+    .stage-contrast-box {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-md);
+    }
+    .contrast-pill-card {
+      padding: var(--space-md);
+      border-radius: var(--rounded);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+    .contrast-pill-card.moha {
+      background: var(--surface-container);
+      border-left: 3px solid var(--data-3);
+    }
+    .contrast-pill-card.dharma {
+      background: var(--primary-container);
+      color: var(--on-primary-container);
+      border-left: 3px solid var(--primary);
+    }
+
+    /* Section 2: Health Reserve Self-Audit Tool */
+    .audit-shell {
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(0, 0.95fr);
+      gap: var(--space-lg);
+      align-items: start;
+    }
+    .audit-pillars {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+    .pillar-box {
+      background: var(--surface-container-low);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-lg);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+    .pillar-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: var(--space-md);
+    }
+    .form-row {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-md);
+      align-items: end;
+    }
+    .field-group {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+    .field-label {
+      font-size: 0.875rem;
+      font-weight: 700;
+      color: var(--on-surface);
+    }
+    .field-hint {
+      font-size: 0.8125rem;
+      color: var(--on-surface-variant);
+    }
+    .control-input, .control-select {
+      min-height: 44px;
+      padding: var(--space-sm) var(--space-md);
+      border-radius: var(--rounded);
+      border: var(--border-soft);
+      background: var(--background);
+      color: var(--on-surface);
+      width: 100%;
+    }
+    .control-select {
+      padding-right: var(--space-xl);
+    }
+    .range-row {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+    }
+    .range-slider {
+      flex: 1;
+      accent-color: var(--primary);
+      min-height: 44px;
+      cursor: pointer;
+    }
+
+    .check-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr));
+      gap: var(--space-sm);
+    }
+    .check-tile {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-sm);
+      padding: var(--space-sm) var(--space-md);
+      min-height: 44px;
+      background: var(--background);
+      border-radius: var(--rounded);
+      border: var(--border-soft);
+      cursor: pointer;
+      transition: background-color var(--dur-micro) var(--ease-out);
+    }
+    .check-tile:hover {
+      background: var(--surface-container);
+    }
+    .check-tile input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+      margin-top: 2px;
+      accent-color: var(--primary);
+      flex-shrink: 0;
+      cursor: pointer;
+    }
+    .check-tile.is-red-flag input[type="checkbox"] {
+      accent-color: var(--error);
+    }
+
+    /* Audit Results Summary Panel */
+    .audit-summary-sticky {
+      position: sticky;
+      top: var(--space-lg);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+    .score-hero {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: var(--space-md);
+    }
+    .big-figure {
+      font-family: var(--font-headline);
+      font-size: clamp(2.25rem, 1.8rem + 1.5vw, 3rem);
+      font-weight: 700;
+      line-height: 1.05;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    .reserve-bars {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+    .reserve-bar-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .reserve-bar-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+    .bar-track {
+      height: 10px;
+      background: var(--background);
+      border-radius: var(--rounded-full);
+      overflow: hidden;
+    }
+    .bar-fill {
+      height: 100%;
+      border-radius: var(--rounded-full);
+      background: var(--primary);
+      transition: width var(--dur-long) var(--ease-out), background-color var(--dur-short) var(--ease-out);
+    }
+    .bar-fill.is-warn { background: var(--tertiary); }
+    .bar-fill.is-risk { background: var(--error); }
+
+    .red-flag-alert {
+      background: var(--error-container);
+      color: var(--on-error-container);
+      border-radius: var(--rounded);
+      padding: var(--space-md);
+      font-size: 0.9rem;
+      display: none;
+    }
+    .red-flag-alert.is-visible {
+      display: block;
+    }
+
+    .recommendations-list {
+      margin: 0;
+      padding-left: var(--space-lg);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+      font-size: 0.925rem;
+    }
+
+    /* Section 3: Interactive Habit Swap & Econology */
+    .swap-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
+      gap: var(--space-md);
+    }
+    .swap-card {
+      background: var(--surface-container-low);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-lg);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: var(--space-md);
+      box-shadow: var(--shadow-soft);
+      transition: background-color var(--dur-short) var(--ease-out), transform var(--dur-short) var(--ease-out);
+    }
+    .swap-card.is-elevated {
+      background: var(--primary-container);
+      color: var(--on-primary-container);
+    }
+    .swap-card.is-elevated p,
+    .swap-card.is-elevated h3,
+    .swap-card.is-elevated .muted {
+      color: var(--on-primary-container);
+    }
+    .swap-toggle-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+
+    /* Almanac Table */
+    .almanac-table-wrap {
+      overflow-x: auto;
+      background: var(--surface-container-low);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-md);
+    }
+    table.almanac-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.95rem;
+    }
+    table.almanac-table th {
+      padding: var(--space-sm) var(--space-md);
+      color: var(--secondary);
+      font-weight: 700;
+      font-size: 0.875rem;
+      border-bottom: var(--border-soft);
+    }
+    table.almanac-table td {
+      padding: var(--space-md);
+      border-bottom: var(--border-soft);
+      vertical-align: top;
+    }
+    table.almanac-table tr:last-child td {
+      border-bottom: 0;
+    }
+
+    /* Section 4: Daily & Weekly Sankalpa Planner */
+    .sankalpa-tracker {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-lg);
+    }
+    .day-dots {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-xs);
+    }
+    .day-btn {
+      min-width: 44px;
+      min-height: 44px;
+      padding: var(--space-xs) var(--space-sm);
+      border-radius: var(--rounded);
+      border: var(--border-soft);
+      background: var(--background);
+      color: var(--on-surface);
+      font-weight: 700;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: background-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out);
+    }
+    .day-btn.is-done {
+      background: var(--primary);
+      color: var(--on-primary);
+      border-color: transparent;
+    }
+
+    .action-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: end;
+      justify-content: space-between;
+      gap: var(--space-md);
+      padding: var(--space-lg);
+      background: var(--surface-container);
+      border-radius: var(--rounded-lg);
+    }
+    .action-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+    }
+    .inline-status {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--primary);
+      min-height: 1.5em;
+    }
+
+    /* Collapsible deep details */
+    details.almanac-details {
+      background: var(--surface-container-low);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-md) var(--space-lg);
+    }
+    details.almanac-details summary {
+      cursor: pointer;
+      font-weight: 700;
+      color: var(--primary);
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+    details.almanac-details[open] summary {
+      margin-bottom: var(--space-md);
+      border-bottom: var(--border-soft);
+      padding-bottom: var(--space-sm);
+    }
+
+    /* Footer */
+    .source-footer {
+      border-top: var(--border-soft);
+      padding-top: var(--space-lg);
+      color: var(--on-surface-variant);
+      font-size: 0.9rem;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+
+    /* Scroll reveal */
+    .reveal-on-scroll {
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity var(--dur-long) var(--ease-out), transform var(--dur-long) var(--ease-out);
+    }
+    .reveal-on-scroll.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Responsive Breakpoints */
+    @media (max-width: 900px) {
+      .hero-block,
+      .two-col-asymmetric,
+      .two-col-balanced,
+      .audit-shell,
+      .stage-detail-panel,
+      .sankalpa-tracker {
+        grid-template-columns: 1fr;
+      }
+      .audit-summary-sticky {
+        position: static;
+      }
+      .stage-selector-row {
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      }
+    }
+
+    @media (max-width: 640px) {
+      .page-grid {
+        padding: var(--space-md);
+        gap: var(--space-xl);
+      }
+      .form-row,
+      .stage-contrast-box {
+        grid-template-columns: 1fr;
+      }
+      .season-strip {
+        padding: var(--space-md);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+      .reveal-on-scroll {
+        opacity: 1;
+        transform: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-grid">
+
+    <!-- HERO / OPENING THESIS -->
+    <header class="hero-block">
+      <div class="hero-copy">
+        <span class="kicker">सभ्यतागत जीवन-पंचांग · वृद्धावस्था से स्वर्णयुग</span>
+        <h1>वानप्रस्थ का पुनराविष्कार: मोह से धर्म-निष्ठ स्वर्ण-उत्तरार्ध की ओर</h1>
+        <p class="hero-subtitle">
+          अधिकांश मनुष्य बाल्यकाल से मध्य-आयु तक वृद्धावस्था की चिंता में जीते हैं, किंतु अनुचित आहार, निष्क्रिय शरीर और सतत तनाव से अपने ही भौतिक शरीर को क्षीण करते रहते हैं। जब धर्म और आत्म-संयम का बोध तब जागे जब देह जर्जर हो चुकी हो, तो उत्तरार्ध भय बन जाता है। यह संवादात्मक रूपरेखा वानप्रस्थ को एक नीरस त्याग नहीं, बल्कि <strong>इष्ट</strong> — एक प्रिय, सुरक्षित और मुक्त जीवन-अध्याय बनाने का व्यावहारिक मानचित्र है।
+        </p>
+        <nav class="section-nav" aria-label="मुख्य अनुभाग">
+          <a class="nav-pill" href="#sec-trajectory">१. जीवन-यात्रा मानचित्र</a>
+          <a class="nav-pill" href="#sec-audit">२. स्वास्थ्य-संचय आत्म-मूल्यांकन</a>
+          <a class="nav-pill" href="#sec-transformation">३. इष्ट-साधना एवं प्रकृति-संयोग</a>
+          <a class="nav-pill" href="#sec-civilization">४. सभ्यतागत लाभ एवं संकल्प</a>
+        </nav>
+      </div>
+
+      <aside class="sanskrit-epigraph" aria-label="मूल सूत्र">
+        <span class="kicker">मूल दार्शनिक आधार</span>
+        <p class="epigraph-verse">“शरीरमाद्यं खलु धर्मसाधनम्।”</p>
+        <p class="epigraph-meaning">
+          यह शरीर (क्षेत्र) ही धर्म, ज्ञान और आंतरिक स्वतंत्रता की साधना का प्रथम उपकरण है। युवावस्था और मध्य-आयु में मांसपेशीय शक्ति, स्वच्छ पोषण और मानसिक स्थिरता का संचय किए बिना वृद्धावस्था में स्वायत्तता संभव नहीं।
+        </p>
+        <div class="tag tag-ochre">मोह से जाग्रति · ५ जीवन-चरण</div>
+      </aside>
+    </header>
+
+    <!-- CANOPY SIGNATURE PHENOLOGY / LIFESPAN CYCLE STRIP -->
+    <section class="season-strip" aria-label="दशक-वार जीवन चक्र पट्टिका">
+      <div class="season-meta">
+        <div class="season-title">जीवन-चक्र पंचांग (० से ९०+ वर्ष) — किसी भी दशक पर क्लिक कर अवस्था देखें</div>
+        <div class="season-legend">
+          <span><span class="legend-dot prep"></span>संचय व निर्माण चरण (बीज वपन)</span>
+          <span><span class="legend-dot peak"></span>वानप्रस्थ व स्वर्ण-प्रौढ़ता (पूर्ण फल)</span>
+          <span><span class="legend-dot rest"></span>प्रारंभिक संस्कार</span>
+        </div>
+      </div>
+      <div class="season-cells" id="decade-strip" role="group" aria-label="जीवन दशक चयन">
+        <button type="button" class="season-cell" data-stage="0" onclick="selectStage(0)">०–१०<small>बाल्य</small></button>
+        <button type="button" class="season-cell is-prep" data-stage="1" onclick="selectStage(1)">१०–२०<small>किशोर</small></button>
+        <button type="button" class="season-cell is-prep" data-stage="2" onclick="selectStage(2)">२०–३०<small>निर्माण</small></button>
+        <button type="button" class="season-cell is-prep" data-stage="2" onclick="selectStage(2)">३०–४०<small>स्थिरता</small></button>
+        <button type="button" class="season-cell is-prep" data-stage="3" onclick="selectStage(3)">४०–५०<small>जांच</small></button>
+        <button type="button" class="season-cell is-prep" data-stage="3" onclick="selectStage(3)">५०–६०<small>हस्तांतरण</small></button>
+        <button type="button" class="season-cell is-peak" data-stage="4" onclick="selectStage(4)">६०–७०<small>वानप्रस्थ</small></button>
+        <button type="button" class="season-cell is-peak" data-stage="4" onclick="selectStage(4)">७०–८०<small>स्वर्ण</small></button>
+        <button type="button" class="season-cell is-peak" data-stage="4" onclick="selectStage(4)">८०+<small>मार्गदर्शन</small></button>
+      </div>
+    </section>
+
+    <!-- SECTION 1: TRAJECTORY PARADOX & STAGE-BY-STAGE JOURNEY MAP -->
+    <section id="sec-trajectory" class="story-section reveal-on-scroll">
+      <div class="section-header">
+        <span class="kicker">भाग १ · आजीवन प्रक्षेपवक्र एवं चरण-दर-चरण मानचित्र</span>
+        <h2>दो रास्ते: मध्य-आयु के मोह (भ्रम) से जर्जरता, या समयपूर्व अनुशासन से स्वतंत्र स्वर्णयुग</h2>
+        <p class="section-lede">
+          भारतीय चिंतन में बाहरी दिखावे, इंद्रिय-भोग और अंतहीन चिंता में डूबे रहने को <strong>माया या मोह</strong> कहा गया है। लोग बैंक खाता तो भरते हैं, पर अपनी देह और मन को अनदेखा कर देते हैं। नीचे दिए गए जीवन-वक्र पर दोनों मार्गों की तुलना करें और हर आयु वर्ग के लिए रचनात्मक संदेश देखें।
+        </p>
+      </div>
+
+      <div class="trajectory-wrap">
+        <div class="trajectory-header">
+          <div>
+            <h3>शारीरिक स्वायत्तता एवं आंतरिक शांति वक्र (आयु ० से ९० वर्ष)</h3>
+            <p class="field-hint">रेखाओं को बदलकर देखें कि ४० की उम्र के बाद चयापचय व संचय में कैसा मोड़ आता है।</p>
+          </div>
+          <div class="path-toggle-group" role="group" aria-label="जीवन पथ तुलना">
+            <button type="button" class="path-btn is-active-gold" id="btn-path-both" onclick="setTrajectoryMode('both')">दोनों पथ साथ देखें</button>
+            <button type="button" class="path-btn" id="btn-path-gold" onclick="setTrajectoryMode('gold')">केवल स्वर्णयुग पथ</button>
+            <button type="button" class="path-btn" id="btn-path-moha" onclick="setTrajectoryMode('moha')">केवल मोह-संकट पथ</button>
+          </div>
+        </div>
+
+        <div class="svg-chart-container">
+          <svg id="trajectory-svg" viewBox="0 0 920 310" role="img" aria-label="मोह पथ बनाम धर्म-निष्ठ स्वर्णयुग पथ का जीवन वक्र">
+            <!-- Horizontal gridlines -->
+            <line x1="65" y1="40" x2="880" y2="40" stroke="var(--outline-variant)" stroke-dasharray="4 4" stroke-width="1"/>
+            <line x1="65" y1="100" x2="880" y2="100" stroke="var(--outline-variant)" stroke-dasharray="4 4" stroke-width="1"/>
+            <line x1="65" y1="160" x2="880" y2="160" stroke="var(--outline-variant)" stroke-dasharray="4 4" stroke-width="1"/>
+            <line x1="65" y1="220" x2="880" y2="220" stroke="var(--outline-variant)" stroke-dasharray="4 4" stroke-width="1"/>
+            <line x1="65" y1="265" x2="880" y2="265" stroke="var(--outline)" stroke-width="1.5"/>
+
+            <!-- Y-axis labels -->
+            <text x="55" y="45" text-anchor="end" font-size="12" fill="var(--on-surface-variant)">उच्च स्वायत्तता</text>
+            <text x="55" y="164" text-anchor="end" font-size="12" fill="var(--on-surface-variant)">संतुलन</text>
+            <text x="55" y="265" text-anchor="end" font-size="12" fill="var(--on-surface-variant)">परनिर्भरता</text>
+
+            <!-- Highlight band for 40s-50s turning point -->
+            <rect x="440" y="32" width="165" height="233" fill="var(--tertiary-container)" opacity="0.28" rx="6"/>
+            <text x="522" y="252" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--on-tertiary-container)">४०–५०: चयापचय मोड़ व वार्षिक जांच</text>
+
+            <!-- Moha Path (Decline after 35-40 into polypharmacy & isolation) -->
+            <g id="svg-group-moha">
+              <path d="M 85 110 C 180 85, 290 95, 385 135 C 475 170, 580 218, 695 236 C 770 247, 830 254, 865 256"
+                    fill="none" stroke="var(--data-3)" stroke-width="3.5" stroke-linecap="round"/>
+              <text x="690" y="220" font-size="12.5" font-weight="700" fill="var(--data-3)">मोह पथ: बहु-औषधि व सस्ते व्यसन</text>
+            </g>
+
+            <!-- Gold / Vanaprastha Path (Sustained capacity & rising inner clarity) -->
+            <g id="svg-group-gold">
+              <path d="M 85 105 C 180 72, 290 65, 385 68 C 480 70, 585 66, 695 58 C 770 53, 830 50, 865 48"
+                    fill="none" stroke="var(--data-1)" stroke-width="4" stroke-linecap="round"/>
+              <text x="650" y="42" font-size="12.5" font-weight="700" fill="var(--data-1)">स्वर्णयुग पथ: मांसपेशीय संचय व वानप्रस्थ इष्ट</text>
+            </g>
+
+            <!-- Stage clickable markers along the X axis -->
+            <g id="svg-stage-markers">
+              <circle cx="115" cy="100" r="7" fill="var(--primary)" stroke="var(--background)" stroke-width="2" class="stage-dot" onclick="selectStage(0)" style="cursor:pointer"/>
+              <text x="115" y="286" text-anchor="middle" font-size="12" font-weight="600" fill="var(--on-surface)">बाल्य (६–१२)</text>
+
+              <circle cx="245" cy="76" r="7" fill="var(--primary)" stroke="var(--background)" stroke-width="2" class="stage-dot" onclick="selectStage(1)" style="cursor:pointer"/>
+              <text x="245" y="286" text-anchor="middle" font-size="12" font-weight="600" fill="var(--on-surface)">किशोर (१३–१९)</text>
+
+              <circle cx="385" cy="68" r="7" fill="var(--primary)" stroke="var(--background)" stroke-width="2" class="stage-dot" onclick="selectStage(2)" style="cursor:pointer"/>
+              <text x="385" y="286" text-anchor="middle" font-size="12" font-weight="600" fill="var(--on-surface)">युवा (२०–३५)</text>
+
+              <circle cx="555" cy="67" r="7" fill="var(--tertiary)" stroke="var(--background)" stroke-width="2" class="stage-dot" onclick="selectStage(3)" style="cursor:pointer"/>
+              <text x="555" y="286" text-anchor="middle" font-size="12" font-weight="600" fill="var(--on-surface)">मध्य-आयु (३६–५५)</text>
+
+              <circle cx="775" cy="53" r="8" fill="var(--primary)" stroke="var(--background)" stroke-width="2" class="stage-dot" onclick="selectStage(4)" style="cursor:pointer"/>
+              <text x="775" y="286" text-anchor="middle" font-size="12" font-weight="700" fill="var(--primary)">वानप्रस्थ (५६+)</text>
+            </g>
+          </svg>
+        </div>
+
+        <!-- Stage Tabs -->
+        <div class="stage-selector-row" role="tablist" aria-label="जीवन चरण चयन">
+          <button type="button" class="stage-tab-btn is-active" data-stage-tab="0" onclick="selectStage(0)">
+            <span class="stage-age">६–१२ वर्ष</span>
+            <span class="stage-name">बाल्यावस्था</span>
+          </button>
+          <button type="button" class="stage-tab-btn" data-stage-tab="1" onclick="selectStage(1)">
+            <span class="stage-age">१३–१९ वर्ष</span>
+            <span class="stage-name">किशोरावस्था</span>
+          </button>
+          <button type="button" class="stage-tab-btn" data-stage-tab="2" onclick="selectStage(2)">
+            <span class="stage-age">२०–३५ वर्ष</span>
+            <span class="stage-name">युवावस्था</span>
+          </button>
+          <button type="button" class="stage-tab-btn" data-stage-tab="3" onclick="selectStage(3)">
+            <span class="stage-age">३६–५५ वर्ष</span>
+            <span class="stage-name">मध्य-आयु</span>
+          </button>
+          <button type="button" class="stage-tab-btn" data-stage-tab="4" onclick="selectStage(4)">
+            <span class="stage-age">५६+ वर्ष</span>
+            <span class="stage-name">वानप्रस्थ स्वर्णयुग</span>
+          </button>
+        </div>
+
+        <!-- Dynamic Stage Details -->
+        <div class="stage-detail-panel" id="stage-detail-panel" aria-live="polite">
+          <!-- Populated via JS -->
+        </div>
+      </div>
+
+      <!-- Three Core Breakdowns of Moha -->
+      <div class="card-grid">
+        <article class="card">
+          <span class="tag tag-ochre">भ्रम १ · देह की उपेक्षा</span>
+          <h3>शरीर को अविनाशी मानने की भूल</h3>
+          <p class="muted">
+            युवावस्था और मध्य-आयु में लोग यह मानकर चलते हैं कि अति-प्रसंस्कृत भोजन, शारीरिक आलस्य और क्रॉनिक तनाव को "बाद में सुधार लेंगे"। परिणाम यह होता है कि जब वृद्धावस्था आती है, तो धर्म और ध्यान का वाहन ही क्षतिग्रस्त हो चुका होता है।
+          </p>
+        </article>
+        <article class="card">
+          <span class="tag tag-ochre">भ्रम २ · अनंत समय का छलावा</span>
+          <h3>बैंक खाता भरा, पर भीतर शून्य</h3>
+          <p class="muted">
+            मध्य-आयु भविष्य के डर से धन और सत्ता संचय में बीत जाती है, जबकि वास्तविक आंतरिक शांति और शारीरिक सहनशक्ति का निर्माण नहीं होता। सेवानिवृत्ति पर यह भ्रम टूटता है।
+          </p>
+        </article>
+        <article class="card">
+          <span class="tag tag-leaf">समाधान · क्रमिक दक्षता</span>
+          <h3>अचानक घबराहट के बजाय सहज स्नातक उपाधि</h3>
+          <p class="muted">
+            यदि जीवन के आरंभिक दशकों में ही संयम, स्वच्छ आहार और सात्विक रुचियों का अभ्यास हो, तो वानप्रस्थ दंड या अकेलापन नहीं, बल्कि जीवन का सबसे आनंदमयी शिखर बन जाता है।
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <!-- SECTION 2: GERIATRIC HEALTH RESERVE SELF-AUDIT -->
+    <section id="sec-audit" class="story-section reveal-on-scroll">
+      <div class="section-header">
+        <span class="kicker">भाग २ · आधुनिक जेरियाट्रिक विज्ञान आधारित आत्म-मूल्यांकन</span>
+        <h2>स्वास्थ्य-संचय (Health Reserve) और बहु-औषधि जोखिम का स्व-परीक्षण</h2>
+        <p class="section-lede">
+          जेरियाट्रिक चिकित्सा का मुख्य उद्देश्य वरिष्ठ जनों की स्वतंत्रता, कार्यक्षमता और जीवन की गरिमा को यथासंभव लंबे समय तक सुरक्षित रखना है। ४० की उम्र के बाद शरीर की संरचना और दवाओं के चयापचय में बदलाव आने लगता है, और ५० के दशक से वार्षिक निवारक जांच अनिवार्य हो जाती है। अपनी वर्तमान स्थिति के अनुसार नीचे दिए गए मानदंड चुनें — आपका डेटा सुरक्षित रूप से सहेजा जाएगा।
+        </p>
+      </div>
+
+      <div class="audit-shell">
+        <div class="audit-pillars">
+
+          <!-- Pillar 1: Muscle & Bone -->
+          <div class="pillar-box">
+            <div class="pillar-head">
+              <h3>१. मांसपेशीय संचय (सार्कोपेनिया) एवं अस्थि-बल</h3>
+              <span class="tag tag-leaf">फ्रैल्टी से बचाव</span>
+            </div>
+            <p class="field-hint">
+              उचित प्रोटीन युक्त संपूर्ण आहार और नियमित प्रतिरोध-व्यायाम से मांसपेशी-क्षय (Sarcopenia) रुकता है। ऑस्टियोपोरोसिस से कूल्हे, कलाई और रीढ़ की हड्डी में फ्रैक्चर का खतरा रहता है — कैल्शियम व विटामिन D चिकित्सक की देखरेख में ही लें ताकि विषाक्तता न हो।
+            </p>
+            <div class="form-row">
+              <div class="field-group">
+                <label class="field-label" for="audit-age-group">आपका वर्तमान आयु वर्ग</label>
+                <select id="audit-age-group" class="control-select" onchange="updateAuditInput('ageGroup', this.value)">
+                  <option value="youth">२०–३५ वर्ष (संचय की स्वर्ण वेला)</option>
+                  <option value="mid">३६–५५ वर्ष (चयापचय परिवर्तन व वार्षिक जांच)</option>
+                  <option value="senior">५६+ वर्ष (वानप्रस्थ एवं गरिमामय संरक्षण)</option>
+                </select>
+              </div>
+              <div class="field-group">
+                <label class="field-label" for="audit-exercise-days">सप्ताह में शक्ति/संतुलन व्यायाम (दिन: <span id="exercise-val" class="mono-num">3</span>)</label>
+                <div class="range-row">
+                  <input type="range" id="audit-exercise-days" class="range-slider" min="0" max="7" value="3" oninput="syncExerciseSlider(this.value)">
+                  <input type="number" id="audit-exercise-num" class="control-input mono-num" style="width: 72px;" min="0" max="7" value="3" aria-label="सप्ताह में व्यायाम के दिन संख्या में" oninput="syncExerciseNumber(this.value)">
+                </div>
+              </div>
+            </div>
+            <div class="check-grid">
+              <label class="check-tile">
+                <input type="checkbox" id="chk-whole-food" onchange="updateAuditCheck('wholeFood', this.checked)">
+                <span>ताजा, सादा संपूर्ण आहार व पर्याप्त प्रोटीन (अति-प्रसंस्कृत खाद्य से बचाव)</span>
+              </label>
+              <label class="check-tile">
+                <input type="checkbox" id="chk-vitd-supervised" onchange="updateAuditCheck('vitDSupervised', this.checked)">
+                <span>कैल्शियम/विटामिन D बिना स्व-दवा के, केवल डॉक्टर की सलाह से</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Pillar 2: Sleep Hygiene -->
+          <div class="pillar-box">
+            <div class="pillar-head">
+              <h3>२. निद्रा स्वच्छता (Sleep Hygiene)</h3>
+              <span class="tag tag-ochre">दवा-मुक्त गहन निद्रा</span>
+            </div>
+            <p class="field-hint">
+              उम्र बढ़ने के साथ गहरी नींद स्वाभाविक रूप से कम होती है और रात में बार-बार जागना (जैसे शौच के लिए उठना) बढ़ता है। तुरंत नींद की गोलियां लेने के बजाय पहले जीवनशैली सुधारें।
+            </p>
+            <div class="check-grid">
+              <label class="check-tile">
+                <input type="checkbox" id="chk-no-caffeine" onchange="updateAuditCheck('noEveningCaffeine', this.checked)">
+                <span>शाम को चाय और कॉफी का सेवन पूर्णतः बंद</span>
+              </label>
+              <label class="check-tile">
+                <input type="checkbox" id="chk-no-long-nap" onchange="updateAuditCheck('noLongNap', this.checked)">
+                <span>दिन में लंबी झपकी से परहेज</span>
+              </label>
+              <label class="check-tile">
+                <input type="checkbox" id="chk-low-screen" onchange="updateAuditCheck('lowScreen', this.checked)">
+                <span>सोने से १ घंटा पूर्व मोबाइल व टीवी स्क्रीन बंद</span>
+              </label>
+              <label class="check-tile">
+                <input type="checkbox" id="chk-no-sleep-pills" onchange="updateAuditCheck('noSleepPills', this.checked)">
+                <span>बिना चिकित्सीय परामर्श नींद की गोलियों का उपयोग नहीं</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Pillar 3: Medication & Polypharmacy -->
+          <div class="pillar-box">
+            <div class="pillar-head">
+              <h3>३. दवा प्रबंधन एवं बहु-औषधि (Polypharmacy) से सुरक्षा</h3>
+              <span class="tag tag-ochre">प्रिस्क्राइबिंग कैस्केड जांच</span>
+            </div>
+            <p class="field-hint">
+              ४० की उम्र के बाद दवाएं शरीर में अधिक देर तक टिकती हैं। मधुमेह, रक्तचाप व हृदय की कई गोलियां एक साथ चलने पर 'प्रिस्क्राइबिंग कैस्केड' (एक दवा के दुष्प्रभाव को नया रोग मानकर दूसरी दवा जोड़ना) का जोखिम बढ़ता है।
+            </p>
+            <div class="form-row">
+              <div class="field-group">
+                <label class="field-label" for="audit-med-count">दैनिक नियमित गोलियों की संख्या (<span id="med-count-val" class="mono-num">1</span>)</label>
+                <div class="range-row">
+                  <input type="range" id="audit-med-count" class="range-slider" min="0" max="12" value="1" oninput="syncMedSlider(this.value)">
+                  <input type="number" id="audit-med-num" class="control-input mono-num" style="width: 72px;" min="0" max="12" value="1" aria-label="दैनिक गोलियों की संख्या" oninput="syncMedNumber(this.value)">
+                </div>
+              </div>
+              <div class="field-group">
+                <label class="field-label" for="audit-med-review">चिकित्सक द्वारा दवा समीक्षा (Medication Review)</label>
+                <select id="audit-med-review" class="control-select" onchange="updateAuditInput('medReview', this.value)">
+                  <option value="regular">नियमित (हर ६–१२ माह में पूर्ण समीक्षा)</option>
+                  <option value="occasional">कभी-कभी (केवल तकलीफ होने पर)</option>
+                  <option value="never">नहीं (पुरानी पर्चियां लगातार चल रही हैं)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Pillar 4: Screening & Vaccines -->
+          <div class="pillar-box">
+            <div class="pillar-head">
+              <h3>४. निवारक स्वास्थ्य जांच एवं टीकाकरण सुरक्षा</h3>
+              <span class="tag tag-leaf">५०+ वर्ष सुरक्षा कवच</span>
+            </div>
+            <div class="check-grid">
+              <label class="check-tile">
+                <input type="checkbox" id="chk-annual-screen" onchange="updateAuditCheck('annualScreening', this.checked)">
+                <span>वार्षिक स्वास्थ्य जांच (स्मृति, गतिशीलता व दीर्घकालिक रोग)</span>
+              </label>
+              <label class="check-tile">
+                <input type="checkbox" id="chk-vax-flu" onchange="updateAuditCheck('vaxFlu', this.checked)">
+                <span>वार्षिक इन्फ्लुएंजा (Flu) टीकाकरण</span>
+              </label>
+              <label class="check-tile">
+                <input type="checkbox" id="chk-vax-shingles" onchange="updateAuditCheck('vaxShingles', this.checked)">
+                <span>शिंगल्स (Shingles) एवं Tdap बूस्टर सुरक्षा</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Pillar 5: Red Flags -->
+          <div class="pillar-box">
+            <div class="pillar-head">
+              <h3>५. चेतावनी संकेत (Red Flags) — पाचन एवं संज्ञानात्मक लक्षण</h3>
+              <span class="tag tag-error">तत्काल परामर्श जांच</span>
+            </div>
+            <p class="field-hint">
+              यदि इनमें से कोई लक्षण स्वयं या परिवार के किसी वरिष्ठ सदस्य में दिखे, तो इसे "उम्र का असर" मानकर न टालें।
+            </p>
+            <div class="check-grid">
+              <label class="check-tile is-red-flag">
+                <input type="checkbox" id="chk-rf-digestive" onchange="updateAuditCheck('rfDigestive', this.checked)">
+                <span>अस्पष्ट क्रमिक वजन घटना, एनीमिया, मल-त्याग में बदलाव या लगातार पेट फूलना</span>
+              </label>
+              <label class="check-tile is-red-flag">
+                <input type="checkbox" id="chk-rf-cognitive" onchange="updateAuditCheck('rfCognitive', this.checked)">
+                <span>गंभीर चिंता/अवसाद, तीव्र मूड बदलाव, वित्त प्रबंधन में कठिनाई या डिजिटल धोखाधड़ी का शिकार होना</span>
+              </label>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Sticky Live Output Panel (Single Canopy Pale-Leaf Highlight Card in this view) -->
+        <aside class="audit-summary-sticky" aria-live="polite">
+          <div class="card is-leaf-highlight">
+            <span class="kicker" style="color: var(--on-primary-container);">जीवंत स्वास्थ्य-संचय रिपोर्ट</span>
+            <div class="score-hero">
+              <div>
+                <div class="big-figure mono-num" id="total-reserve-score">72</div>
+                <div style="font-size: 0.875rem; font-weight: 700;">१०० में से स्वास्थ्य-संचय अंक</div>
+              </div>
+              <div id="reserve-status-badge" class="tag tag-ochre">संतुलित तैयारी</div>
+            </div>
+
+            <div class="reserve-bars">
+              <div class="reserve-bar-item">
+                <div class="reserve-bar-label"><span>मांसपेशी एवं अस्थि संचय</span><span class="mono-num" id="bar-muscle-pct">65%</span></div>
+                <div class="bar-track"><div class="bar-fill" id="bar-muscle" style="width: 65%;"></div></div>
+              </div>
+              <div class="reserve-bar-item">
+                <div class="reserve-bar-label"><span>निद्रा स्वच्छता</span><span class="mono-num" id="bar-sleep-pct">50%</span></div>
+                <div class="bar-track"><div class="bar-fill" id="bar-sleep" style="width: 50%;"></div></div>
+              </div>
+              <div class="reserve-bar-item">
+                <div class="reserve-bar-label"><span>औषधि सुरक्षा (Polypharmacy बचाव)</span><span class="mono-num" id="bar-med-pct">85%</span></div>
+                <div class="bar-track"><div class="bar-fill" id="bar-med" style="width: 85%;"></div></div>
+              </div>
+              <div class="reserve-bar-item">
+                <div class="reserve-bar-label"><span>निवारक जांच एवं टीकाकरण</span><span class="mono-num" id="bar-prev-pct">60%</span></div>
+                <div class="bar-track"><div class="bar-fill" id="bar-prev" style="width: 60%;"></div></div>
+              </div>
+            </div>
+
+            <div id="red-flag-alert" class="red-flag-alert" role="alert">
+              <strong>चिकित्सीय चेतावनी:</strong> आपने पाचन अथवा संज्ञानात्मक/व्यवहारिक चेतावनी संकेत चुना है। इसे सामान्य बुढ़ापा न समझें — शीघ्र जेरियाट्रिक विशेषज्ञ से मूल्यांकन कराएं।
+            </div>
+
+            <div>
+              <h4 style="margin-bottom: var(--space-xs);">आपकी ३ प्रमुख प्राथमिकताएँ:</h4>
+              <ul class="recommendations-list" id="audit-recommendations">
+                <!-- Populated by JS -->
+              </ul>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>सार्वभौमिक पीढ़ीगत संदेश (बिना उपदेश के प्रेरणा)</h3>
+            <p class="field-hint">हर आयु वर्ग को डर के बिना तैयार करने हेतु रचनात्मक रूपक:</p>
+            <div class="almanac-table-wrap" style="padding: var(--space-sm);">
+              <table class="almanac-table">
+                <thead>
+                  <tr>
+                    <th>आयु वर्ग</th>
+                    <th>मुख्य रूपक (Hook)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>बाल्य (६–१२)</strong></td>
+                    <td>"भविष्य का अवतार" — असली फल और खेल से अपने लेवल-७० अवतार की ऊर्जा बढ़ाओ।</td>
+                  </tr>
+                  <tr>
+                    <td><strong>किशोर (१३–१९)</strong></td>
+                    <td>"मैट्रिक्स तोड़ो" — जंक फूड व स्क्रीन की लत के विरुद्ध आत्म-संयम ही असली विद्रोह है।</td>
+                  </tr>
+                  <tr>
+                    <td><strong>युवा (२०–३५)</strong></td>
+                    <td>"यान गढ़ो" — २५ में इंजन बचाओ, ताकि ७५ की उम्र में पूर्ण गतिशीलता रहे।</td>
+                  </tr>
+                  <tr>
+                    <td><strong>मध्य (३६–५५)</strong></td>
+                    <td>"हस्तांतरण" — तनाव-संग्रह रोककर वानप्रस्थ स्वतंत्रता का अभ्यास प्रारंभ करें।</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- SECTION 3: VANAPRASTHA AS ISHTA, REPLACING CHEAP DOPAMINE, & ECONOLOGY -->
+    <section id="sec-transformation" class="story-section reveal-on-scroll">
+      <div class="section-header">
+        <span class="kicker">भाग ३ · आंतरिक वानप्रस्थ, सस्ते व्यसन से मुक्ति एवं इकोनोलॉजी</span>
+        <h2>जब सेवानिवृत्ति बिना आंतरिक वानप्रस्थ के आती है: शून्य को सात्विक उत्थान से भरें</h2>
+        <p class="section-lede">
+          जब कामकाज या घर की सत्ता समाप्त होती है और मन को पहले से धर्म, स्थिरता या किसी सार्थक उद्देश्य में प्रशिक्षित नहीं किया गया हो, तो दिन में एक खालीपन आ जाता है। सत्व के अभाव में मन स्वतः <strong>रजस</strong> (अशांत लालसा, गपशप, उत्तेजना) और <strong>तमस</strong> (आलस्य, व्यसन, क्षय) में गिर जाता है। उपदेश से नहीं, बल्कि एक उच्चतर और अधिक समृद्ध रुचि (इष्ट) देकर ही सस्ती लतों को गलाया जा सकता है।
+        </p>
+      </div>
+
+      <!-- Interactive Habit Transformation Cards -->
+      <div class="swap-grid" id="habit-swap-grid">
+        <!-- Populated via JS so user can toggle between Trap & Dharmic Elevation -->
+      </div>
+
+      <!-- Econology & Nature Reconnection -->
+      <div class="two-col-asymmetric">
+        <div class="card">
+          <span class="kicker">इकोनोलॉजी (Ecology + Economy + Cognition)</span>
+          <h3>संवेदी भुखमरी से प्रकृति-संयोग की ओर ४ रचनात्मक बदलाव</h3>
+          <p class="muted">
+            बंद कमरों में रहकर और बिना योगदान दिए निरंतर उपभोग करने से मनुष्य "सुख के वेश में संवेदी भुखमरी" का शिकार होता है। पृथ्वी से जीवंत जुड़ाव इसे तुरंत उलट देता है:
+          </p>
+          <div class="almanac-table-wrap" style="padding: 0; background: transparent;">
+            <table class="almanac-table">
+              <thead>
+                <tr>
+                  <th>रचनात्मक सूत्र</th>
+                  <th>व्यावहारिक क्रिया</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>१. "कमाया हुआ भोजन"</strong></td>
+                  <td>भोजन से पहले मिट्टी छूना, पौधे को जल देना, रसोई का कचरा खाद में डालना या स्वयं एक पत्ती/औषधि तोड़ना।</td>
+                </tr>
+                <tr>
+                  <td><strong>२. "पहले सूर्य, फिर स्क्रीन"</strong></td>
+                  <td>जागने के पहले ३० मिनट और सूर्यास्त के अंतिम ३० मिनट नंगे पाँव घास या धरती पर, खुले आकाश के नीचे बिताना।</td>
+                </tr>
+                <tr>
+                  <td><strong>३. पारिस्थितिक कर्म (Net-Positive)</strong></td>
+                  <td>केवल कदम या कैलोरी नहीं, यह गिनना कि आज हमने उपभोग से अधिक वृक्षारोपण, स्वच्छता, खाद या मरम्मत की या नहीं।</td>
+                </tr>
+                <tr>
+                  <td><strong>४. मुक्त आकाश धर्म-गोष्ठियाँ</strong></td>
+                  <td>अध्ययन समूह, भजन, और वरिष्ठ-युवा संवाद बंद कमरों से निकालकर वृक्षों, झीलों या उद्यानों के नीचे आयोजित करना।</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="card is-deep-loam">
+          <span class="kicker">तीर्थ, स्वाध्याय एवं सामुदायिक आलंबन</span>
+          <h3>अकेलेपन से संगत (Sangha) और सुरक्षित निवास की ओर</h3>
+          <p>
+            सामाजिक अलगाव और अकेलापन वरिष्ठ जनों के स्वास्थ्य पर सबसे बड़ा बोझ है। वानप्रस्थ का अर्थ परिवार से कटकर दुखी एकाकीपन नहीं, बल्कि सचेत अनासक्ति और उद्देश्यपूर्ण समुदाय से जुड़ना है:
+          </p>
+          <ul class="recommendations-list" style="padding-left: var(--space-md);">
+            <li><strong>तीर्थ स्थान एवं अध्ययन केंद्र:</strong> स्वाध्याय, दर्शन और शांत चिंतन के समूहों से जुड़ना।</li>
+            <li><strong>सामुदायिक एवं सहायक ढाँचा:</strong> परिवार की उपलब्धता व क्षमता के अनुसार घर पर विश्वसनीय सहयोगी, अथवा वरिष्ठ नागरिक समुदाय और असिस्टेड लिविंग जहाँ फिजियोथेरेपी, संरचित दिनचर्या व समवयस्क गतिविधियाँ हों।</li>
+            <li><strong>सक्रिय सेवा (Seva):</strong> मोहल्ले के बच्चों को कथा-शिक्षा, वाटिका संधारण, गो/पक्षी सेवा या जल-संरक्षण की जिम्मेदारी लेकर अनुपयोगिता के भाव को समाप्त करना।</li>
+          </ul>
+          <details class="almanac-details">
+            <summary>इष्ट के रूप में वानप्रस्थ: मनोवैज्ञानिक दृष्टिकोण</summary>
+            <p class="muted" style="font-size: 0.925rem;">
+              वानप्रस्थ को जब "त्याग की मजबूरी" के बजाय <strong>"इष्ट"</strong> (स्वेच्छा से चुना गया प्रिय लक्ष्य — आत्म-निपुणता, आंतरिक मुक्ति और शांति) बनाया जाता है, तब अधिकार छोड़ने पर भी कोई कड़वाहट नहीं रहती। व्यक्ति घर की राजनीति में उलझने के बजाय एक शांत, निष्पक्ष मार्गदर्शक बन जाता है।
+            </p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: CIVILIZATIONAL DIVIDENDS & UNIVERSAL DAILY/WEEKLY SANKALPA -->
+    <section id="sec-civilization" class="story-section reveal-on-scroll">
+      <div class="section-header">
+        <span class="kicker">भाग ४ · सभ्यतागत रूपांतरण एवं दो सार्वभौमिक संकल्प</span>
+        <h2>रोग-प्रबंधन संस्कृति से धर्म-निष्ठ जीवन की ओर बढ़ने के ४ सभ्यतागत लाभ</h2>
+        <p class="section-lede">
+          जब पूरा समाज मध्य-आयु के भ्रम को त्यागकर समय रहते देह-अनुशासन और वानप्रस्थ को अपनाता है, तो केवल व्यक्ति नहीं बल्कि पूरी मानव सभ्यता चार स्तरों पर ऊपर उठती है।
+        </p>
+      </div>
+
+      <div class="card-grid">
+        <article class="card">
+          <span class="mono-num" style="color: var(--primary); font-weight: 700;">०१ · स्वास्थ्य लाभांश</span>
+          <h3>वैश्विक रोग-बोझ से मुक्ति</h3>
+          <p class="muted">
+            मधुमेह, उच्च रक्तचाप और जर्जरता जैसी जीवनशैली से उपजी बीमारियाँ घटने से स्वास्थ्य-तंत्र का अपार संसाधन और श्रम नवाचार, शिक्षा व प्रकृति-पुनर्स्थापन में लग सकेगा।
+          </p>
+        </article>
+        <article class="card">
+          <span class="mono-num" style="color: var(--primary); font-weight: 700;">०२ · पीढ़ीगत सामंजस्य</span>
+          <h3>सत्ता-मोह और टकराव का अंत</h3>
+          <p class="muted">
+            आश्रम-दृष्टि से वरिष्ठ जब समय पर पारिवारिक व संस्थागत नियंत्रण छोड़कर परामर्श की भूमिका स्वीकार करते हैं, तो युवा पीढ़ी को बिना संघर्ष नेतृत्व करने का स्थान मिलता है।
+          </p>
+        </article>
+        <article class="card">
+          <span class="mono-num" style="color: var(--primary); font-weight: 700;">०३ · पारिस्थितिक संतुलन</span>
+          <h3>सात्विक सरलता से पृथ्वी की रक्षा</h3>
+          <p class="muted">
+            अनावश्यक उपभोग और संवेदी लालसा थमने पर स्थानीय, ताजा और न्यूनतम अपशिष्ट वाला जीवन सहज हो जाता है, जिससे धरती के संसाधनों पर दबाव घटता है।
+          </p>
+        </article>
+        <article class="card">
+          <span class="mono-num" style="color: var(--primary); font-weight: 700;">०४ · ज्ञान-कोष</span>
+          <h3>वरिष्ठ बोझ नहीं, समाज के स्तंभ</h3>
+          <p class="muted">
+            तीर्थों, स्वाध्याय मंडलों व पार्क-गोष्ठियों में सक्रिय प्रबुद्ध वरिष्ठ संकट के समय समाज को निष्पक्ष विवेक, नैतिक स्पष्टता और स्थिरता प्रदान करते हैं।
+          </p>
+        </article>
+      </div>
+
+      <!-- Interactive Daily & Weekly Universal Sankalpa Tracker -->
+      <div class="sankalpa-tracker">
+        <div class="card is-interactive">
+          <div class="pillar-head">
+            <span class="tag tag-leaf">दैनिक सार्वभौमिक अभ्यास</span>
+            <span class="mono-num" id="soil-streak-label">० / ७ दिन पूर्ण</span>
+          </div>
+          <h3>३० मिनट मिट्टी और सूर्य विनिमय (Soil &amp; Sun Exchange)</h3>
+          <p class="muted">
+            प्रतिदिन बिना फोन के नंगे पाँव प्राकृतिक धरती (मिट्टी, घास या रेत) पर ३० मिनट चलें और प्रकृति की एक छोटी सेवा करें — पौधों को जल देना, प्लास्टिक कचरा हटाना, खाद पलटना या बीज बोना। यह ७ वर्ष के बालक से लेकर ८० वर्ष के वरिष्ठ तक सबको एक साथ जोड़ता है।
+          </p>
+          <div class="field-group">
+            <span class="field-label">इस सप्ताह के पूर्ण किए गए दिन चिह्नित करें:</span>
+            <div class="day-dots" id="soil-days-row">
+              <button type="button" class="day-btn" data-day="0" onclick="toggleSoilDay(0)">सोम</button>
+              <button type="button" class="day-btn" data-day="1" onclick="toggleSoilDay(1)">मंगल</button>
+              <button type="button" class="day-btn" data-day="2" onclick="toggleSoilDay(2)">बुध</button>
+              <button type="button" class="day-btn" data-day="3" onclick="toggleSoilDay(3)">गुरु</button>
+              <button type="button" class="day-btn" data-day="4" onclick="toggleSoilDay(4)">शुक्र</button>
+              <button type="button" class="day-btn" data-day="5" onclick="toggleSoilDay(5)">शनि</button>
+              <button type="button" class="day-btn" data-day="6" onclick="toggleSoilDay(6)">रवि</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card is-interactive">
+          <div class="pillar-head">
+            <span class="tag tag-ochre">साप्ताहिक सार्वभौमिक अभ्यास</span>
+            <span class="mono-num" id="sankalpa-count-label">० बार पूर्ण</span>
+          </div>
+          <h3>साप्ताहिक संकल्प पदयात्रा एवं सादा सहभोज (१ घंटा)</h3>
+          <p class="muted">
+            सप्ताह में एक बार बिना स्क्रीन के १ घंटा किसी वरिष्ठ (दादा-दादी, पड़ोसी या सामुदायिक वरिष्ठ) के साथ बिताएं: <strong>२० मिनट साथ चलें</strong> (मांसपेशी, संतुलन व अस्थि-बल हेतु) + <strong>४० मिनट सादा स्वच्छ भोजन व संवाद</strong> (अकेलापन मिटाना, दवाओं व डिजिटल सुरक्षा की मौन जांच और जीवन-विवेक ग्रहण करना)।
+          </p>
+          <div class="form-row">
+            <div class="field-group">
+              <label class="field-label" for="sankalpa-partner">वरिष्ठ साथी / साप्ताहिक संकल्प नोट</label>
+              <input type="text" id="sankalpa-partner" class="control-input" placeholder="उदा. दादाजी के साथ उद्यान भ्रमण" oninput="updateSankalpaText(this.value)">
+            </div>
+            <button type="button" class="btn btn-primary" onclick="incrementSankalpaWalk()">इस सप्ताह की पदयात्रा दर्ज करें</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Persistence & Export Bar -->
+      <div class="action-bar">
+        <div class="field-group" style="flex: 1; min-width: 240px;">
+          <label class="field-label" for="personal-ishta-note">मेरा वानप्रस्थ इष्ट-संकल्प (स्वतः सहेजा जाता है)</label>
+          <input type="text" id="personal-ishta-note" class="control-input" placeholder="उदा. प्रतिदिन प्रातः नंगे पाँव भ्रमण, वाटिका सेवा और स्वाध्याय" oninput="updateIshtaNote(this.value)">
+          <div class="inline-status" id="save-status-msg" aria-live="polite"></div>
+        </div>
+        <div class="action-buttons">
+          <button type="button" class="btn btn-primary" onclick="exportHindiBlueprint()">मेरी कार्ययोजना डाउनलोड करें (.txt)</button>
+          <button type="button" class="btn btn-secondary" id="btn-reset-all" onclick="handleResetClick(this)">डेटा रीसेट करें</button>
+        </div>
+      </div>
+    </section>
+
+    <footer class="source-footer">
+      <strong>स्रोत एवं आधार:</strong> यह संवादात्मक रूपरेखा अपोलो हॉस्पिटल्स ज्युबिली हिल्स के जेरियाट्रिक मेडिसिन एवं स्वस्थ वार्धक्य मार्गदर्शन (स्वतंत्रता, निद्रा स्वच्छता, बहु-औषधि बचाव, सार्कोपेनिया, चेतावनी संकेत व टीकाकरण) तथा 'ओल्ड टू गोल्ड — वानप्रस्थ पुनर्रचना एवं इकोनोलॉजी' सभ्यतागत ढाँचे पर आधारित है।
+      <span>नोट: स्वास्थ्य-संचय आत्म-मूल्यांकन केवल शैक्षिक एवं आत्म-चिंतन हेतु है; किसी भी चिकित्सीय निर्णय या दवा परिवर्तन हेतु योग्य चिकित्सक से परामर्श अवश्य लें।</span>
+    </footer>
+  </div>
+
+  <api-shim></api-shim>
+
+  <script>
+    const STAGE_DATA = [
+      {
+        age: `६–१२ वर्ष · बाल्यावस्था`,
+        title: `भविष्य के स्वयं का अवतार (Future You Avatar)`,
+        metaphor: `शरीर एक जीवित वीडियो-गेम चरित्र है जिसकी स्वास्थ्य-पट्टी आज के आहार और खेल से भरती है।`,
+        creative: `कहानियों और चित्रकथाओं में दिखाएं कि जंक फूड और आलस्य से 'लेवल ७० अवतार' जंग खाया व धीमा हो जाता है, जबकि ताजे फल व पेड़ चढ़ाई से एक फुर्तीला और सक्षम 'लेवल ७० गुरु' बनता है।`,
+        mohaRisk: `पैकेटबंद मीठा नाश्ता, स्क्रीन की आदत और प्रकृति से पूर्ण दूरी।`,
+        dharmaAction: `भोजन से पहले मिट्टी या पौधे को स्पर्श करना और प्रतिदिन खुली हवा में खेलना।`
+      },
+      {
+        age: `१३–१९ वर्ष · किशोरावस्था`,
+        title: `मैट्रिक्स (भ्रमजाल) से बाहर निकलो`,
+        metaphor: `अंतहीन स्क्रॉलिंग, अति-प्रसंस्कृत स्नैक्स और आलस्य आपकी भविष्य की स्वतंत्रता छीनने के लिए रचा गया जाल है।`,
+        creative: `ब्रह्मचर्य और आत्म-संयम को किसी दमन के रूप में नहीं, बल्कि उस उपभोक्ता संस्कृति के विरुद्ध सबसे बड़े विद्रोह के रूप में प्रस्तुत करें जो युवाओं को कमजोर व व्यसनी बनाना चाहती है।`,
+        mohaRisk: `देर रात मोबाइल स्क्रॉलिंग, सस्ता डोपामिन और सर्कैडियन लय का टूटना।`,
+        dharmaAction: `"पहले सूर्य, फिर स्क्रीन" नियम और सप्ताह में एक बार किसी वरिष्ठ संग पदयात्रा।`
+      },
+      {
+        age: `२०–३५ वर्ष · युवावस्था`,
+        title: `अपना जीवन-यान समय रहते गढ़ें`,
+        metaphor: `२५ की उम्र में खराब किए गए इंजन पर आप ७० की उम्र की मैराथन नहीं दौड़ सकते।`,
+        creative: `"शरीरमाद्यं खलु धर्मसाधनम्" को सीधे मांसपेशीय संचय (Muscle Reserve), स्वच्छ पाचन और मानसिक स्पष्टता से जोड़ें — असली धन ३० की उम्र का वेतन नहीं, ७५ की उम्र की गतिशीलता है।`,
+        mohaRisk: `केवल करियर-दौड़ में शरीर को अनदेखा करना और क्रॉनिक तनाव को सामान्य मान लेना।`,
+        dharmaAction: `सप्ताह में ३–४ दिन शक्ति अभ्यास, सादा संपूर्ण आहार और पारिस्थितिक कर्म (Net-Positive) अभ्यास।`
+      },
+      {
+        age: `३६–५५ वर्ष · मध्य-आयु`,
+        title: `गरिमामय उत्तराधिकार एवं चयापचय मोड़`,
+        metaphor: `तनाव और नियंत्रण को जकड़कर रखना बंद करें; अपनी वानप्रस्थ-स्वतंत्रता का प्रशिक्षण शुरू करें।`,
+        creative: `४० के बाद दवा चयापचय बदलता है और ५० के दशक में वार्षिक स्वास्थ्य जांच शुरू होनी चाहिए। सप्ताहांत 'डिजिटल व घरेलू डिटॉक्स' के माध्यम से नियंत्रण छोड़ने और सात्विक सरलता का अभ्यास करें।`,
+        mohaRisk: `धन-सत्ता का संचय, अनदेखे लक्षण और अनेक दवाओं के चक्रव्यूह (Polypharmacy) की शुरुआत।`,
+        dharmaAction: `वार्षिक निवारक जांच, दवा समीक्षा, और परिवार व कार्यक्षेत्र में क्रमिक उत्तराधिकार की तैयारी।`
+      },
+      {
+        age: `५६+ वर्ष · वानप्रस्थ स्वर्णयुग`,
+        title: `इष्ट के रूप में वानप्रस्थ — गरिमा, स्वायत्तता और मार्गदर्शन`,
+        metaphor: `सत्ता से बेदखली नहीं, बल्कि आत्म-निपुणता, सत्संग, सेवा और प्रकृति-संयोग की स्वर्णिम स्नातक उपाधि।`,
+        creative: `शारीरिक बल, निद्रा स्वच्छता, टीकाकरण और नियमित दवा समीक्षा से स्वायत्त रहें; तथा तीर्थ-स्थानों, स्वाध्याय मंडलों और उद्यान-सेवा से समाज के शांत मार्गदर्शक बनें।`,
+        mohaRisk: `अकेलापन, उत्तेजक टीवी समाचार/रील्स की लत, पारिवारिक राजनीति व संवेदी व्यसन।`,
+        dharmaAction: `प्रतिदिन ३० मिनट मिट्टी-सूर्य सेवा, सक्रिय सत्संग एवं युवा पीढ़ी को अनुभव-हस्तांतरण।`
+      }
+    ];
+
+    const HABIT_SWAPS = [
+      {
+        id: `swap_screens`,
+        trapTitle: `निष्क्रिय स्क्रीन और उत्तेजक समाचार चक्र`,
+        trapDesc: `सनसनीखेज खबरें, कड़वे धारावाहिक, ऊँची आवाज की राजनीतिक बहसें और मोबाइल रील्स — जो तंत्रिका तंत्र को अशांत कर रक्तचाप बढ़ाती हैं और गहरी नींद नष्ट करती हैं।`,
+        dharmaTitle: `सक्रिय सत्संग, श्रवण और उद्यान-गोष्ठी`,
+        dharmaDesc: `अंधेरे कमरे में अकेले स्क्रीन देखने के बजाय पार्क या समूह में महाकाव्य, दार्शनिक संवाद, शास्त्रीय संगीत और धर्म-प्रकृति चर्चा से जुड़ना।`
+      },
+      {
+        id: `swap_control`,
+        trapTitle: `अधिकार-मोह, गपशप और निरर्थकता`,
+        trapDesc: `सत्ता छिनने के भय से परिवार की राजनीति में हस्तक्षेप करना, धन जकड़े रहना और अगली पीढ़ी के निर्णयों पर निरंतर टीका-टिप्पणी करना।`,
+        dharmaTitle: `जीवंत सेवा दायित्व (Seva) एवं मार्गदर्शन`,
+        dharmaDesc: `मंदिर या मोहल्ले की वाटिका संभालना, बच्चों का मार्गदर्शन करना, गो/पक्षी सेवा या जल-वृक्ष संरक्षण का दायित्व लेकर सार्थक संरक्षक बनना।`
+      },
+      {
+        id: `swap_sensory`,
+        trapTitle: `अति-मीठा, तला भोजन और संवेदी लालसा`,
+        trapDesc: `ऊब या अकेलेपन को सुन्न करने के लिए भारी तला-भुना भोजन, अतिरिक्त चीनी, तंबाकू या मद्य जैसी तामसिक आदतों का सहारा लेना।`,
+        dharmaTitle: `संवेदी वातावरण का सात्विक पुनर्संयोजन`,
+        dharmaDesc: `शयनकक्ष से टीवी हटाना, संध्या का हल्का सात्विक भोजन समय पर करना और प्रातः सूर्य-प्रकाश व भ्रमण से मन को स्वतः शांत रखना।`
+      }
+    ];
+
+    const DEFAULT_STATE = {
+      selectedStage: 3,
+      trajectoryMode: `both`,
+      audit: {
+        ageGroup: `mid`,
+        exerciseDays: 3,
+        wholeFood: true,
+        vitDSupervised: true,
+        noEveningCaffeine: true,
+        noLongNap: false,
+        lowScreen: false,
+        noSleepPills: true,
+        medCount: 1,
+        medReview: `regular`,
+        annualScreening: true,
+        vaxFlu: false,
+        vaxShingles: false,
+        rfDigestive: false,
+        rfCognitive: false
+      },
+      swappedHabits: [],
+      soilDays: [false, false, false, false, false, false, false],
+      sankalpaWalks: 0,
+      sankalpaPartner: ``,
+      ishtaNote: ``
+    };
+
+    let appState = JSON.parse(JSON.stringify(DEFAULT_STATE));
+    let persistTimeout = null;
+
+    function cloneDefaultState() {
+      return JSON.parse(JSON.stringify(DEFAULT_STATE));
+    }
+
+    async function persistState(statusText) {
+      const msgEl = document.getElementById(`save-status-msg`);
+      if (msgEl && statusText) {
+        msgEl.textContent = statusText;
+      }
+      if (window.notebookAppApi && typeof window.notebookAppApi.setAppState === `function`) {
+        try {
+          await window.notebookAppApi.setAppState(appState);
+          if (msgEl) {
+            msgEl.textContent = statusText || `प्रगति सुरक्षित रूप से सहेजी गई।`;
+          }
+        } catch (err) {
+          if (msgEl) {
+            msgEl.textContent = `अस्थायी सत्र में सहेजा गया।`;
+          }
+        }
+      }
+    }
+
+    function schedulePersist(statusText) {
+      clearTimeout(persistTimeout);
+      persistTimeout = setTimeout(function() {
+        persistState(statusText);
+      }, 200);
+    }
+
+    function selectStage(index) {
+      const idx = Math.max(0, Math.min(STAGE_DATA.length - 1, Number(index) || 0));
+      appState.selectedStage = idx;
+
+      const tabs = document.querySelectorAll(`.stage-tab-btn`);
+      tabs.forEach(function(btn) {
+        const btnIdx = Number(btn.getAttribute(`data-stage-tab`));
+        btn.classList.toggle(`is-active`, btnIdx === idx);
+      });
+
+      const stripCells = document.querySelectorAll(`.season-cell`);
+      stripCells.forEach(function(cell) {
+        const cIdx = Number(cell.getAttribute(`data-stage`));
+        cell.classList.toggle(`is-selected`, cIdx === idx);
+      });
+
+      const stage = STAGE_DATA[idx];
+      const panel = document.getElementById(`stage-detail-panel`);
+      if (panel && stage) {
+        panel.innerHTML = `
+          <div style="display:flex; flex-direction:column; gap: var(--space-sm);">
+            <span class="tag tag-ochre">${stage.age}</span>
+            <h3>${stage.title}</h3>
+            <p><strong>मुख्य रूपक:</strong> ${stage.metaphor}</p>
+            <p class="muted"><strong>रचनात्मक मार्गदर्शन:</strong> ${stage.creative}</p>
+          </div>
+          <div class="stage-contrast-box">
+            <div class="contrast-pill-card moha">
+              <strong style="color: var(--data-3);">मोह का फंदा</strong>
+              <span style="font-size: 0.92rem;">${stage.mohaRisk}</span>
+            </div>
+            <div class="contrast-pill-card dharma">
+              <strong>धर्म-निष्ठ कदम</strong>
+              <span style="font-size: 0.92rem;">${stage.dharmaAction}</span>
+            </div>
+          </div>
+        `;
+      }
+      schedulePersist();
+    }
+
+    function setTrajectoryMode(mode) {
+      appState.trajectoryMode = mode;
+      const mohaGroup = document.getElementById(`svg-group-moha`);
+      const goldGroup = document.getElementById(`svg-group-gold`);
+      const btnBoth = document.getElementById(`btn-path-both`);
+      const btnGold = document.getElementById(`btn-path-gold`);
+      const btnMoha = document.getElementById(`btn-path-moha`);
+
+      if (mohaGroup) mohaGroup.style.opacity = (mode === `gold`) ? `0.15` : `1`;
+      if (goldGroup) goldGroup.style.opacity = (mode === `moha`) ? `0.15` : `1`;
+
+      if (btnBoth) btnBoth.className = `path-btn` + (mode === `both` ? ` is-active-gold` : ``);
+      if (btnGold) btnGold.className = `path-btn` + (mode === `gold` ? ` is-active-gold` : ``);
+      if (btnMoha) btnMoha.className = `path-btn` + (mode === `moha` ? ` is-active-moha` : ``);
+
+      schedulePersist();
+    }
+
+    function syncExerciseSlider(val) {
+      const clamped = Math.max(0, Math.min(7, Number(val) || 0));
+      const numEl = document.getElementById(`audit-exercise-num`);
+      const dispEl = document.getElementById(`exercise-val`);
+      if (numEl) numEl.value = clamped;
+      if (dispEl) dispEl.textContent = String(clamped);
+      appState.audit.exerciseDays = clamped;
+      recomputeAudit();
+      schedulePersist();
+    }
+
+    function syncExerciseNumber(val) {
+      const clamped = Math.max(0, Math.min(7, Number(val) || 0));
+      const sliderEl = document.getElementById(`audit-exercise-days`);
+      const dispEl = document.getElementById(`exercise-val`);
+      if (sliderEl) sliderEl.value = clamped;
+      if (dispEl) dispEl.textContent = String(clamped);
+      appState.audit.exerciseDays = clamped;
+      recomputeAudit();
+      schedulePersist();
+    }
+
+    function syncMedSlider(val) {
+      const clamped = Math.max(0, Math.min(12, Number(val) || 0));
+      const numEl = document.getElementById(`audit-med-num`);
+      const dispEl = document.getElementById(`med-count-val`);
+      if (numEl) numEl.value = clamped;
+      if (dispEl) dispEl.textContent = String(clamped);
+      appState.audit.medCount = clamped;
+      recomputeAudit();
+      schedulePersist();
+    }
+
+    function syncMedNumber(val) {
+      const clamped = Math.max(0, Math.min(12, Number(val) || 0));
+      const sliderEl = document.getElementById(`audit-med-count`);
+      const dispEl = document.getElementById(`med-count-val`);
+      if (sliderEl) sliderEl.value = clamped;
+      if (dispEl) dispEl.textContent = String(clamped);
+      appState.audit.medCount = clamped;
+      recomputeAudit();
+      schedulePersist();
+    }
+
+    function updateAuditInput(key, val) {
+      appState.audit[key] = val;
+      recomputeAudit();
+      schedulePersist();
+    }
+
+    function updateAuditCheck(key, checked) {
+      appState.audit[key] = Boolean(checked);
+      recomputeAudit();
+      schedulePersist();
+    }
+
+    function setBarState(barId, pctId, pctValue) {
+      const pct = Math.max(0, Math.min(100, Math.round(pctValue)));
+      const bar = document.getElementById(barId);
+      const label = document.getElementById(pctId);
+      if (label) label.textContent = `${pct}%`;
+      if (bar) {
+        bar.style.width = `${pct}%`;
+        bar.classList.remove(`is-warn`, `is-risk`);
+        if (pct < 45) {
+          bar.classList.add(`is-risk`);
+        } else if (pct < 75) {
+          bar.classList.add(`is-warn`);
+        }
+      }
+    }
+
+    function recomputeAudit() {
+      const a = appState.audit;
+
+      // 1. Muscle & Bone (max 100)
+      const exScore = Math.min(5, a.exerciseDays) * 10; // up to 50
+      const foodScore = a.wholeFood ? 30 : 0;
+      const vitScore = a.vitDSupervised ? 20 : 0;
+      const musclePct = exScore + foodScore + vitScore;
+
+      // 2. Sleep Hygiene (max 100)
+      const sleepPct =
+        (a.noEveningCaffeine ? 25 : 0) +
+        (a.noLongNap ? 25 : 0) +
+        (a.lowScreen ? 25 : 0) +
+        (a.noSleepPills ? 25 : 0);
+
+      // 3. Polypharmacy Safety (max 100)
+      let medPct = 100;
+      if (a.medCount >= 5) {
+        medPct -= 40;
+      } else if (a.medCount >= 3) {
+        medPct -= 20;
+      }
+      if (a.medReview === `occasional`) medPct -= 20;
+      if (a.medReview === `never`) medPct -= 45;
+      medPct = Math.max(10, Math.min(100, medPct));
+
+      // 4. Preventive & Vaccines (max 100)
+      let prevPct = (a.annualScreening ? 50 : 0) + (a.vaxFlu ? 25 : 0) + (a.vaxShingles ? 25 : 0);
+      if (a.ageGroup === `youth` && !a.annualScreening) {
+        prevPct += 20; // Baseline healthy habit credit for youth
+      }
+      prevPct = Math.min(100, prevPct);
+
+      const overall = Math.round((musclePct * 0.30) + (sleepPct * 0.25) + (medPct * 0.25) + (prevPct * 0.20));
+
+      const scoreEl = document.getElementById(`total-reserve-score`);
+      const badgeEl = document.getElementById(`reserve-status-badge`);
+      if (scoreEl) scoreEl.textContent = String(overall);
+
+      if (badgeEl) {
+        badgeEl.className = `tag`;
+        if (overall >= 80) {
+          badgeEl.classList.add(`tag-leaf`);
+          badgeEl.textContent = `सुदृढ़ स्वर्ण-संचय`;
+        } else if (overall >= 55) {
+          badgeEl.classList.add(`tag-ochre`);
+          badgeEl.textContent = `मध्यम तैयारी — सुधार योग्य`;
+        } else {
+          badgeEl.classList.add(`tag-error`);
+          badgeEl.textContent = `उच्च जोखिम — शीघ्र सुधार आवश्यक`;
+        }
+      }
+
+      setBarState(`bar-muscle`, `bar-muscle-pct`, musclePct);
+      setBarState(`bar-sleep`, `bar-sleep-pct`, sleepPct);
+      setBarState(`bar-med`, `bar-med-pct`, medPct);
+      setBarState(`bar-prev`, `bar-prev-pct`, prevPct);
+
+      // Red flags
+      const rfAlert = document.getElementById(`red-flag-alert`);
+      if (rfAlert) {
+        rfAlert.classList.toggle(`is-visible`, Boolean(a.rfDigestive || a.rfCognitive));
+      }
+
+      // Personalized Recommendations
+      const recs = [];
+      if (a.rfDigestive || a.rfCognitive) {
+        recs.push(`चेतावनी संकेत सक्रिय हैं: अस्पष्ट वजन घटना, एनीमिया, या संज्ञानात्मक/डिजिटल धोखाधड़ी संवेदनशीलता हेतु तुरंत विशेषज्ञ चिकित्सक से मिलें।`);
+      }
+      if (a.medCount >= 4 && a.medReview !== `regular`) {
+        recs.push(`बहु-औषधि (Polypharmacy) एवं प्रिस्क्राइबिंग कैस्केड से बचने हेतु अपनी सभी गोलियों की सूची चिकित्सक से तुरंत समीक्षा कराएं।`);
+      }
+      if (a.exerciseDays < 3 || !a.wholeFood) {
+        recs.push(`सार्कोपेनिया (मांसपेशी-क्षय) रोकने के लिए सप्ताह में कम से कम ३ दिन शक्ति-व्यायाम व प्रोटीन युक्त संपूर्ण आहार जोड़ें।`);
+      }
+      if (sleepPct < 75) {
+        recs.push(`गहरी नींद के लिए शाम की चाय/कॉफी और सोने से पूर्व स्क्रीन बंद करें — बिना परामर्श नींद की गोली से बचें।`);
+      }
+      if (!a.annualScreening && a.ageGroup !== `youth`) {
+        recs.push(`४०–५० की आयु के बाद स्मृति, गतिशीलता और दीर्घकालिक रोगों की वार्षिक जांच नियमित कराएं।`);
+      }
+      if (recs.length === 0) {
+        recs.push(`आपकी स्वास्थ्य-संचय नींव मजबूत है। अब दैनिक ३० मिनट मिट्टी-सूर्य विनिमय और साप्ताहिक संकल्प पदयात्रा को निरंतर रखें।`);
+      }
+
+      const recList = document.getElementById(`audit-recommendations`);
+      if (recList) {
+        recList.innerHTML = recs.slice(0, 3).map(function(item) {
+          return `<li>${item}</li>`;
+        }).join(``);
+      }
+    }
+
+    function renderHabitSwaps() {
+      const container = document.getElementById(`habit-swap-grid`);
+      if (!container) return;
+
+      container.innerHTML = HABIT_SWAPS.map(function(item) {
+        const isElevated = appState.swappedHabits.indexOf(item.id) !== -1;
+        return `
+          <article class="swap-card ${isElevated ? `is-elevated` : ``}">
+            <div style="display:flex; flex-direction:column; gap: var(--space-sm);">
+              <div class="swap-toggle-row">
+                <span class="tag ${isElevated ? `tag-leaf` : `tag-ochre`}">
+                  ${isElevated ? `सत्व-उत्थान सक्रिय` : `तमस/रजस जाल`}
+                </span>
+              </div>
+              <h3>${isElevated ? item.dharmaTitle : item.trapTitle}</h3>
+              <p class="${isElevated ? `` : `muted`}" style="font-size: 0.95rem;">
+                ${isElevated ? item.dharmaDesc : item.trapDesc}
+              </p>
+            </div>
+            <button type="button" class="btn ${isElevated ? `btn-secondary` : `btn-primary`}" onclick="toggleHabitSwap('${item.id}')">
+              ${isElevated ? `मूल जोखिम देखें` : `सात्विक विकल्प अपनाएं`}
+            </button>
+          </article>
+        `;
+      }).join(``);
+    }
+
+    function toggleHabitSwap(id) {
+      const pos = appState.swappedHabits.indexOf(id);
+      if (pos === -1) {
+        appState.swappedHabits.push(id);
+      } else {
+        appState.swappedHabits.splice(pos, 1);
+      }
+      renderHabitSwaps();
+      schedulePersist(`जीवनशैली रूपांतरण अद्यतन हुआ।`);
+    }
+
+    function renderSoilDays() {
+      const buttons = document.querySelectorAll(`#soil-days-row .day-btn`);
+      let doneCount = 0;
+      buttons.forEach(function(btn) {
+        const idx = Number(btn.getAttribute(`data-day`));
+        const isDone = Boolean(appState.soilDays[idx]);
+        if (isDone) doneCount++;
+        btn.classList.toggle(`is-done`, isDone);
+        btn.setAttribute(`aria-pressed`, isDone ? `true` : `false`);
+      });
+      const label = document.getElementById(`soil-streak-label`);
+      if (label) label.textContent = `${doneCount} / ७ दिन पूर्ण`;
+    }
+
+    function toggleSoilDay(dayIdx) {
+      appState.soilDays[dayIdx] = !appState.soilDays[dayIdx];
+      renderSoilDays();
+      schedulePersist(`दैनिक मिट्टी-सूर्य संकल्प सहेजा गया।`);
+    }
+
+    function incrementSankalpaWalk() {
+      appState.sankalpaWalks = (Number(appState.sankalpaWalks) || 0) + 1;
+      const label = document.getElementById(`sankalpa-count-label`);
+      if (label) label.textContent = `${appState.sankalpaWalks} बार पूर्ण`;
+      schedulePersist(`साप्ताहिक संकल्प पदयात्रा दर्ज की गई।`);
+    }
+
+    function updateSankalpaText(val) {
+      appState.sankalpaPartner = val;
+      schedulePersist();
+    }
+
+    function updateIshtaNote(val) {
+      appState.ishtaNote = val;
+      schedulePersist();
+    }
+
+    function syncFormFromState() {
+      const a = appState.audit;
+      const setVal = function(id, v) { const el = document.getElementById(id); if (el) el.value = v; };
+      const setChk = function(id, v) { const el = document.getElementById(id); if (el) el.checked = Boolean(v); };
+      const setTxt = function(id, v) { const el = document.getElementById(id); if (el) el.textContent = String(v); };
+
+      setVal(`audit-age-group`, a.ageGroup);
+      setVal(`audit-exercise-days`, a.exerciseDays);
+      setVal(`audit-exercise-num`, a.exerciseDays);
+      setTxt(`exercise-val`, a.exerciseDays);
+
+      setChk(`chk-whole-food`, a.wholeFood);
+      setChk(`chk-vitd-supervised`, a.vitDSupervised);
+      setChk(`chk-no-caffeine`, a.noEveningCaffeine);
+      setChk(`chk-no-long-nap`, a.noLongNap);
+      setChk(`chk-low-screen`, a.lowScreen);
+      setChk(`chk-no-sleep-pills`, a.noSleepPills);
+
+      setVal(`audit-med-count`, a.medCount);
+      setVal(`audit-med-num`, a.medCount);
+      setTxt(`med-count-val`, a.medCount);
+      setVal(`audit-med-review`, a.medReview);
+
+      setChk(`chk-annual-screen`, a.annualScreening);
+      setChk(`chk-vax-flu`, a.vaxFlu);
+      setChk(`chk-vax-shingles`, a.vaxShingles);
+      setChk(`chk-rf-digestive`, a.rfDigestive);
+      setChk(`chk-rf-cognitive`, a.rfCognitive);
+
+      setVal(`sankalpa-partner`, appState.sankalpaPartner || ``);
+      setVal(`personal-ishta-note`, appState.ishtaNote || ``);
+
+      const walkLabel = document.getElementById(`sankalpa-count-label`);
+      if (walkLabel) walkLabel.textContent = `${appState.sankalpaWalks || 0} बार पूर्ण`;
+
+      selectStage(appState.selectedStage);
+      setTrajectoryMode(appState.trajectoryMode || `both`);
+      recomputeAudit();
+      renderHabitSwaps();
+      renderSoilDays();
+    }
+
+    function exportHindiBlueprint() {
+      const scoreEl = document.getElementById(`total-reserve-score`);
+      const scoreText = scoreEl ? scoreEl.textContent : `72`;
+      const soilCount = appState.soilDays.filter(Boolean).length;
+      const stageInfo = STAGE_DATA[appState.selectedStage] || STAGE_DATA[3];
+
+      const lines = [
+        `==================================================`,
+        `वृद्धावस्था से स्वर्णयुग — व्यक्तिगत वानप्रस्थ कार्ययोजना`,
+        `==================================================`,
+        ``,
+        `चयनित जीवन चरण: ${stageInfo.age} — ${stageInfo.title}`,
+        `स्वास्थ्य-संचय सूचकांक: ${scoreText} / 100`,
+        `दैनिक नियमित दवाइयां: ${appState.audit.medCount} (समीक्षा: ${appState.audit.medReview})`,
+        `सप्ताह में शक्ति/संतुलन व्यायाम: ${appState.audit.exerciseDays} दिन`,
+        ``,
+        `साप्ताहिक संकल्प पदयात्रा एवं सहभोज पूर्ण: ${appState.sankalpaWalks} बार`,
+        `वरिष्ठ साथी / संकल्प नोट: ${appState.sankalpaPartner || `निर्दिष्ट नहीं`}`,
+        `३० मिनट मिट्टी-सूर्य विनिमय (इस सप्ताह): ${soilCount} / 7 दिन`,
+        `मेरा वानप्रस्थ इष्ट-संकल्प: ${appState.ishtaNote || `निर्दिष्ट नहीं`}`,
+        ``,
+        `मूल सूत्र: "शरीरमाद्यं खलु धर्मसाधनम्।"`
+      ].join(`\n`);
+
+      if (window.notebookAppApi && typeof window.notebookAppApi.triggerFileDownload === `function`) {
+        window.notebookAppApi.triggerFileDownload({
+          content: lines,
+          contentType: `text/plain`,
+          encoding: `UTF-8`,
+          filename: `old-to-gold-vanaprastha-plan.txt`
+        });
+        const msg = document.getElementById(`save-status-msg`);
+        if (msg) msg.textContent = `आपकी हिंदी कार्ययोजना डाउनलोड के लिए तैयार है।`;
+      }
+    }
+
+    function handleResetClick(btn) {
+      if (!btn) return;
+      if (btn.dataset.armed !== `true`) {
+        btn.dataset.armed = `true`;
+        btn.textContent = `पुष्टि के लिए पुनः दबाएं`;
+        return;
+      }
+      btn.dataset.armed = `false`;
+      btn.textContent = `डेटा रीसेट करें`;
+      appState = cloneDefaultState();
+      syncFormFromState();
+      persistState(`सभी मान प्रारंभिक स्थिति में रीसेट किए गए।`);
+    }
+
+    function setupScrollReveal() {
+      const items = document.querySelectorAll(`.reveal-on-scroll`);
+      if (!(`IntersectionObserver` in window)) {
+        items.forEach(function(el) { el.classList.add(`is-visible`); });
+        return;
+      }
+      const observer = new IntersectionObserver(function(entries, obs) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add(`is-visible`);
+            obs.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1 });
+
+      items.forEach(function(el) { observer.observe(el); });
+    }
+
+    async function initApp() {
+      if (window.notebookAppApi && typeof window.notebookAppApi.getAppState === `function`) {
+        try {
+          const saved = await window.notebookAppApi.getAppState();
+          if (saved && typeof saved === `object`) {
+            appState = Object.assign(cloneDefaultState(), saved);
+            if (saved.audit) {
+              appState.audit = Object.assign(cloneDefaultState().audit, saved.audit);
+            }
+          }
+        } catch (err) {
+          // Use default state cleanly
+        }
+      }
+
+      syncFormFromState();
+      setupScrollReveal();
+
+      if (window.notebookAppApi && typeof window.notebookAppApi.notifyAppReady === `function`) {
+        window.notebookAppApi.notifyAppReady();
+      }
+    }
+
+    document.addEventListener(`DOMContentLoaded`, function() {
+      initApp();
+    });
+  </script>
+</body>
+</html>
