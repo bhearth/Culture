@@ -1,0 +1,1584 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>e/arth × Khel.o · The Book of the Living Pulse — Story, Linked Verse &amp; Wordplay</title>
+<style>
+:root{
+  --night:#0c1822;--night-2:#132534;--soil:#1d2b1e;--paper:#f2ece0;--dim:#9fb2bf;
+  --ochre:#e2ab45;--rain:#8fb8d8;--moss:#9cc08e;--clay:#d98b6a;--jade:#52b788;
+  --serif:"Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,serif;
+  --sans:"Avenir Next","Segoe UI",system-ui,-apple-system,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;scroll-behavior:smooth}
+body{
+  background:var(--night);color:var(--paper);font-family:var(--sans);
+  line-height:1.58;min-height:100vh;overflow-x:hidden;
+}
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:repeating-linear-gradient(100deg,transparent 0 24px,rgba(143,184,216,.04) 24px 25px);
+}
+#soil{
+  position:fixed;inset:0;z-index:0;pointer-events:none;opacity:0;
+  background:linear-gradient(to bottom,transparent 30%,var(--soil) 100%);
+  transition:opacity .25s ease;
+}
+.page{position:relative;z-index:1;max-width:44rem;margin:0 auto;padding:0 1.25rem}
+.intro{padding-top:clamp(2rem,6vw,3.8rem)}
+h1{font-family:var(--serif);font-weight:400;font-size:clamp(1.95rem,5.5vw,2.95rem);line-height:1.08;margin:0 0 .75rem;color:var(--paper)}
+.intro p{color:var(--dim);margin:0 0 .8rem;font-size:.96rem}
+.key{font-size:.86rem;background:rgba(255,255,255,.03);padding:.65rem .85rem;border-left:2px solid var(--ochre)}
+.key b{color:var(--ochre);font-weight:600}
+
+/* Search & Sound-Jumble Bar */
+.search-wrap{margin:1.1rem 0 .6rem;position:relative}
+#q{
+  width:100%;padding:.72rem 1rem;font:1rem var(--serif);
+  color:var(--paper);background:rgba(255,255,255,.05);
+  border:1px solid var(--rain);border-radius:4px;outline:none;
+}
+#q:focus{border-color:var(--ochre);box-shadow:0 0 0 3px rgba(226,171,69,.2)}
+#q::placeholder{color:var(--dim)}
+
+.jumble-strip{
+  display:flex;flex-wrap:wrap;gap:.35rem;margin:.6rem 0;
+  padding:.55rem .65rem;background:rgba(19,37,52,.75);border:1px dashed rgba(226,171,69,.35);
+}
+.jumble-label{font-size:.73rem;text-transform:uppercase;letter-spacing:.08em;color:var(--ochre);width:100%;margin-bottom:.15rem}
+.j-btn{
+  font:inherit;font-size:.78rem;color:var(--paper);background:rgba(226,171,69,.1);
+  border:1px solid rgba(226,171,69,.4);padding:.2rem .55rem;cursor:pointer;transition:.15s;
+}
+.j-btn:hover,.j-btn.on{background:var(--ochre);color:var(--night);font-weight:600}
+
+.cats{display:flex;flex-wrap:wrap;gap:.38rem;margin-top:.8rem}
+.cats button{
+  font:inherit;font-size:.8rem;color:var(--paper);background:none;
+  border:1px solid rgba(143,184,216,.5);padding:.26rem .65rem;cursor:pointer;
+}
+.cats button:hover{background:rgba(143,184,216,.12)}
+.cats button.on{background:var(--rain);color:var(--night);border-color:var(--rain);font-weight:600}
+
+.tools{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.7rem;align-items:center}
+.tools button{
+  font:inherit;font-size:.76rem;color:var(--dim);background:none;
+  border:1px dashed rgba(143,184,216,.4);padding:.24rem .6rem;cursor:pointer;
+}
+.tools button:hover{color:var(--paper);border-color:var(--rain)}
+.hike-counter{margin-left:auto;font-size:.78rem;color:var(--moss);font-family:var(--serif)}
+
+#now{
+  position:sticky;top:0;z-index:5;margin:1.5rem -1.25rem 0;padding:.55rem 1.25rem;
+  background:rgba(12,24,34,.94);backdrop-filter:blur(8px);
+  border-bottom:1px solid rgba(143,184,216,.22);
+  font-size:.84rem;color:var(--rain);display:flex;justify-content:space-between;align-items:center;
+}
+#now b{color:var(--paper);font-weight:600}
+
+/* Verse + Story Node */
+.verse{
+  position:relative;padding:2rem 0 2.2rem 1.5rem;
+  border-left:1px solid rgba(143,184,216,.32);
+  transition:background .25s,opacity .25s;
+}
+.verse.context-adj{
+  border-left:2px solid var(--moss);
+  background:rgba(156,192,142,.04);
+}
+.vh{display:flex;flex-wrap:wrap;gap:.35rem .9rem;align-items:baseline;font-size:.8rem;color:var(--dim)}
+.rn{font-family:var(--serif);font-size:1.12rem;color:var(--ochre)}
+.cat-tag{color:var(--rain);font-size:.76rem;letter-spacing:.05em;text-transform:uppercase}
+.st{font-size:.7rem;padding:.08rem .48rem;color:var(--night);background:var(--moss);font-weight:600;cursor:pointer;border:0}
+.st.hiked{background:var(--ochre);color:var(--night)}
+.ctx-pill{font-size:.68rem;padding:.05rem .42rem;border:1px solid var(--moss);color:var(--moss)}
+
+/* 3-Line Linked Poem */
+.poem-box{margin:.55rem 0 .7rem}
+.line{font-family:var(--serif);font-size:clamp(1.18rem,3.4vw,1.42rem);line-height:1.5;margin:.18rem 0;max-width:34rem;color:var(--paper)}
+
+/* Continuous Story Narrative Paragraph */
+.story-para{
+  font-size:.95rem;line-height:1.68;color:#d6e0e8;
+  margin:.65rem 0;max-width:38rem;
+  background:rgba(255,255,255,.025);padding:.75rem .95rem;
+  border-left:2px solid rgba(143,184,216,.4);border-radius:0 4px 4px 0;
+}
+body.hide-story .story-para{display:none}
+
+/* Hindi Echo */
+.echo{
+  font-size:.88rem;color:var(--dim);margin:.45rem 0 0;max-width:36rem;
+  padding-left:.65rem;border-left:1px solid rgba(226,171,69,.38);
+}
+.echo::before{content:"हिंदी · ";color:var(--ochre);font-size:.75rem;letter-spacing:.05em}
+body.hide-echo .echo{display:none}
+
+/* Jumble Wordplay Bar inside Verse */
+.v-jumble{
+  margin:.55rem 0 0;font-size:.78rem;color:var(--dim);
+  font-family:var(--serif);
+}
+.v-jumble span{color:var(--ochre)}
+
+/* Clickable Gold Words */
+.w{
+  font:inherit;color:var(--ochre);background:none;border:0;
+  border-bottom:1px solid rgba(226,171,69,.55);padding:0 1px;cursor:pointer;
+}
+.w:hover{border-bottom-color:var(--ochre);background:rgba(226,171,69,.12)}
+.w.hot{background:rgba(226,171,69,.28);color:#fff}
+button:focus-visible{outline:2px solid var(--ochre);outline-offset:2px}
+
+.hinge{position:relative;margin:1.1rem 0 0;font-size:.86rem;color:var(--dim)}
+.hinge::before{
+  content:"";position:absolute;left:-1.5rem;top:.48em;width:.56rem;height:.56rem;
+  margin-left:-.28rem;border-radius:50%;background:var(--ochre);
+}
+.verse.flash{animation:flash 1.4s ease-out}
+@keyframes flash{from{background:rgba(226,171,69,.22)}to{background:transparent}}
+.verse.hidden{display:none}
+
+/* SIMPLE POPUP CARD (#card) */
+#card{
+  position:fixed;left:0;right:0;bottom:0;z-index:20;margin:0 auto;
+  max-width:44rem;max-height:68vh;overflow:auto;background:#122230;
+  border-top:2px solid var(--ochre);padding:1.05rem 1.25rem 1.35rem;
+  box-shadow:0 -12px 35px rgba(0,0,0,.6);
+}
+#card[hidden]{display:none}
+.ch{display:flex;justify-content:space-between;align-items:baseline;gap:.8rem;margin-bottom:.35rem}
+.ct{font-family:var(--serif);font-size:1.45rem;color:var(--ochre);display:flex;align-items:center;gap:.55rem;flex-wrap:wrap}
+.ct .sym{
+  font-size:1.5rem;line-height:1;color:var(--night);background:var(--ochre);
+  padding:.12rem .45rem;border-radius:3px;font-family:var(--serif);
+}
+.x{font:inherit;font-size:.86rem;color:var(--paper);background:none;border:1px solid rgba(255,255,255,.25);padding:.18rem .55rem;cursor:pointer}
+
+/* Interactive Phonetic Ladder in Popup */
+.ladder{display:flex;flex-wrap:wrap;gap:.5rem 1.1rem;margin:.75rem 0 .55rem;padding:.55rem .7rem;background:rgba(0,0,0,.22);border-radius:4px}
+.step{position:relative;padding-top:.85rem;font-family:var(--serif);font-size:.98rem;color:var(--dim);cursor:pointer;background:none;border:0;text-align:left}
+.step small{display:block;font-family:var(--sans);font-size:.72rem;color:var(--rain)}
+.step::before{content:"";position:absolute;top:0;left:0;width:.5rem;height:.5rem;border-radius:50%;background:var(--rain)}
+.step+.step::after{content:"";position:absolute;top:.22rem;left:-1rem;width:.85rem;height:1px;background:var(--rain)}
+.step.on{color:var(--ochre);font-weight:600}
+.step.on::before{background:var(--ochre);transform:scale(1.25)}
+
+.alias{font-size:.84rem;color:var(--dim);margin:0 0 .45rem}
+.lab{margin:.35rem 0;font-size:.89rem;line-height:1.48}
+.lab b{
+  display:inline-block;font-weight:600;font-size:.71rem;padding:.05rem .42rem;
+  margin-right:.42rem;color:var(--night);text-transform:uppercase;letter-spacing:.04em;
+}
+.Etymology{background:var(--moss)}
+.Meaning{background:#d6ceb8}
+.Jumble{background:var(--ochre)}
+
+/* Zero-Boilerplate Poetic Goal Box: Hike & Cherish */
+.goal-achieved{
+  margin:.75rem 0 .55rem;padding:.75rem .9rem;background:rgba(226,171,69,.09);
+  border-left:3px solid var(--ochre);border-radius:3px;
+}
+.goal-poetry{
+  font-family:var(--serif);font-size:1.05rem;color:var(--paper);
+  margin:0 0 .55rem;font-style:italic;
+}
+.hc-grid{display:grid;grid-template-columns:1fr 1fr;gap:.55rem;font-size:.84rem}
+@media(max-width:30rem){.hc-grid{grid-template-columns:1fr}}
+.hc-box{padding:.45rem .6rem;background:rgba(255,255,255,.04);border-radius:3px}
+.hc-box b{display:block;font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;margin-bottom:.15rem}
+.hc-hike b{color:var(--ochre)}
+.hc-cherish b{color:var(--moss)}
+
+.appears{font-size:.84rem;color:var(--dim);margin:.6rem 0 .35rem}
+.appears button{
+  font:inherit;font-size:.78rem;color:var(--paper);background:none;
+  border:1px solid var(--rain);padding:.06rem .45rem;margin:.1rem .15rem;cursor:pointer;
+}
+.appears button.curr{background:var(--rain);color:var(--night);font-weight:700}
+
+.popup-actions{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.55rem}
+.nx{
+  font:inherit;font-size:.86rem;font-weight:600;color:var(--night);background:var(--ochre);
+  border:0;padding:.5rem .85rem;cursor:pointer;flex:1;min-width:14rem;
+}
+.hike-btn{
+  font:inherit;font-size:.84rem;color:var(--paper);background:none;
+  border:1px solid var(--moss);padding:.5rem .85rem;cursor:pointer;
+}
+.hike-btn.on{background:var(--moss);color:var(--night);font-weight:600}
+
+footer{
+  position:relative;z-index:1;max-width:44rem;margin:0 auto;
+  padding:3rem 1.25rem 14rem;border-top:1px solid rgba(143,184,216,.2);
+  font-size:.88rem;color:var(--dim);
+}
+footer h2{font-family:var(--serif);font-weight:400;font-size:1.2rem;color:var(--paper);margin:0 0 .45rem}
+footer p{margin:0 0 .9rem}
+</style>
+</head>
+<body>
+<div id="soil" aria-hidden="true"></div>
+<div class="page">
+  <header class="intro">
+    <h1>The Book of the Living Pulse</h1>
+    <p>One unbroken chain of <b>36 Linked Verses &amp; Human Story Chapters</b>. Each verse passes its hinge word to the next, and the 36th returns to the 1st like water returning to the cloud. Every repetitive label is removed: goals stand as achieved poetry showing <b>🏔️ What to Hike</b> and <b>🌱 What to Nourish &amp; Cherish</b>.</p>
+    <p class="key">Tap any <b>gold word</b> in the poem or story to open the simple card: see its <b>Phonetic Word-Jumble Ladder</b>, its symbol, and click <b>“Next Relatable Verse &amp; Sentence →”</b> to travel across the story.</p>
+
+    <div class="search-wrap">
+      <input id="q" type="search" autocomplete="off" placeholder="Type any word or sound-twin (e.g. pet, patte, pilla, saliva, gps, disha, traffic, sap, dhan, sun)...">
+    </div>
+
+    <div class="jumble-strip" aria-label="Phonetic Word-Jumble Families">
+      <span class="jumble-label">Phonetic Word-Jumble Bridges (Tap to trace across story &amp; poetry):</span>
+      <button type="button" class="j-btn" data-j="pet">Pet · Patte · Pata · Pita · Pota · Potting · Patting · Paata</button>
+      <button type="button" class="j-btn" data-j="pilla">Pull · Pill · Pilla · Phul · Phal · Pala</button>
+      <button type="button" class="j-btn" data-j="un">Un · Us · Sun · Son · Won · One</button>
+      <button type="button" class="j-btn" data-j="disha">Dwesh · Dosh · Dasha → Disha</button>
+      <button type="button" class="j-btn" data-j="dhan">Dhan · Dhyan · Dhanya · Lakshya · Lakshmi</button>
+      <button type="button" class="j-btn" data-j="sam">Sam · Same · Simple · Samay · Samyak · Samadhi</button>
+      <button type="button" class="j-btn" data-j="komute">Komute · Community · Commute · Terrified → Terrific</button>
+      <button type="button" class="j-btn" data-j="saliva">Thoo-Thoo → Saliva → You-You → Wow-Wow → Tera-Tera</button>
+      <button type="button" class="j-btn" data-j="sap">Saap → SAP · Culture vs Vulture · G-Old Will</button>
+    </div>
+
+    <nav class="cats" id="cats" aria-label="Cantos"></nav>
+    <div class="tools">
+      <button type="button" id="storyToggle">Story prose: on</button>
+      <button type="button" id="echoToggle">Hindi echo: on</button>
+      <button type="button" id="resetFilters">Show all 36 verses</button>
+      <span class="hike-counter" id="hikeCount">0 / 36 Mountains Hiked</span>
+    </div>
+  </header>
+
+  <div id="now">
+    <span>Now reading: <b id="nowCat">All Cantos · The Complete Loop</b></span>
+    <span id="matchStatus" style="font-size:.76rem;color:var(--ochre)"></span>
+  </div>
+
+  <main id="verses"></main>
+</div>
+
+<footer>
+  <h2>Why Poetry + Story + Phonetic Jumbles End Human Conflict</h2>
+  <p>The greatest tragedy on Earth is the lack of clarity: trapped in private ego-worlds, people leak their Prana into harm, cruelty, cheap gossip, and wasted talent. When a single word like <b>pet</b> immediately unlocks <b>patte</b> (the leaf), <b>pata</b> (inner GPS address), <b>pita-pota</b> (ancestral lineage), <b>potting</b> (hands in wet soil), <b>petting &amp; patting</b> (kind touch), and <b>paata</b> (the child's song), the brain rewires from conspiracy to creation in one flash of recognition.</p>
+  <p>Every symbol (云, 雨, 侍, 育, 脉, 息, 气, 向, 共, 合, 童, 禅, 定) replaces dry bureaucratic numbering. Every verse is both a poem to cherish and a mountain to hike.</p>
+</footer>
+
+<aside id="card" hidden aria-live="polite"></aside>
+
+<script>
+/* ============================================================================
+   36 LINKED STORY-VERSE CANTOS (Weaving File 4 Poetry + File 3 58-Part Story)
+   ============================================================================ */
+const V = [
+  /* 1 · Water & Input Clarity */
+  {cat:"Water & Clarity",
+   lines:["A [[cloud]], once a hill,","lifts its weight into the sky,","and lets go of [[rain]]."],
+   story:"A machine or a human being flourishes only when given crystal-clear [[input]]; just as a [[cloud]] sheds its heavy fog to fall as clear [[rain]], we break every confused problem into one gentle question at a time so no listener feels pressured.",
+   echo:"बादल पहाड़ था, अब आकाश में — स्पष्ट इनपुट और वर्षा बनकर लौटता है।",
+   jumble:"clūd (hill) → cloud → rain · confused fog → clear input",
+   hinge:"serve"},
+
+  /* 2 · Unseen Service */
+  {cat:"Water & Clarity",
+   lines:["[[rain]] finds the dry field","and asks no thanks in return;","it [[serve|serves]] the ground."],
+   story:"Leaving behind private ego-worlds where everyone thinks 'only I am right,' [[rain]] [[serve|serves]] the parched earth without asking for credit, teaching us to look at what we can contribute rather than what we crave.",
+   echo:"वर्षा सूखे खेत को मिलती है, बदले में कुछ नहीं माँगती; अहंकार छोड़कर सेवा करती है।",
+   jumble:"servus → serve ↔ sevā (सेवा) · ego-right → quiet rain",
+   hinge:"seva"},
+
+  /* 3 · Threshold of Seva, Tyag, Sadachar */
+  {cat:"Ethics & Doorway",
+   lines:["[[seva]] is [[seva|service]] unseen,","[[tyag]] lets the finished go,","[[sadachar]] aligns the step."],
+   story:"We inscribed [[seva]], [[tyag]], and [[sadachar]] upon our front doorway so every visitor reads it before stepping inside—and when they ask what we will release, we stand ready to share our television, our car, and our tools.",
+   echo:"द्वार पर सेवा, त्याग और सदाचार लिखा है — जो आए उसे देने का भाव।",
+   jumble:"seva (service) · tyag (release) · sadachar (sat + ācāra)",
+   hinge:"nourish"},
+
+  /* 4 · Nursing & Nourishing the Roots */
+  {cat:"Water & Clarity",
+   lines:["[[serve|Served]], the field opens","its hands and passes it down,","roots learn to [[nourish|nurse]]."],
+   story:"When a household opens its hands in generosity, the whole neighborhood softens; [[root|roots]] drink the dark water and [[nourish]] the [[leaf]] and the [[pilla|child]] without hoarding.",
+   echo:"सींचा गया खेत हाथ खोलता है, जड़ें पोषण और करुणा सीखती हैं।",
+   jumble:"nutrire → nurse ↔ nourish ↔ poṣaṇa (पोषण)",
+   hinge:"leaf"},
+
+  /* 5 · Root, Leaf & River */
+  {cat:"Earth & Soil",
+   lines:["[[root]] drinks the dark,","[[leaf]] lifts the light to the sky,","the [[river]] carries both."],
+   story:"Stepping out of air-conditioned rooms where comfort had killed human artistry, we returned to the [[river]] and the green [[leaf|patte]], climbing [[tree|trees]], running, jumping, and pouring honest sweat into the living ground.",
+   echo:"जड़ अंधकार पीती है, पत्ता प्रकाश उठाता है; इंसान पसीना बहाकर प्रकृति से जुड़ता है।",
+   jumble:"leaf ↔ patra (पत्र · leaf/page) ↔ patte (पत्ते)",
+   hinge:"earth"},
+
+  /* 6 · Earth, Dhara & Dharma */
+  {cat:"Earth & Soil",
+   lines:["[[earth]] holds what it is given,","the [[dhara|dharā]] that bears all weight,","and [[dharma]] is that holding."],
+   story:"The [[earth]] bears our footsteps without complaint; from the root *dhṛ* (to hold) arises both [[dhara]] (the ground) and [[dharma]] (the responsibility that holds a community together).",
+   echo:"धरा जो मिला है उसे धारण करती है, और धर्म वही धारण है।",
+   jumble:"dhṛ (to hold) → dharā (earth) → dharma (right holding)",
+   hinge:"humus"},
+
+  /* 7 · Humus, Human & Humble */
+  {cat:"Earth & Soil",
+   lines:["[[humus]] is the ground we are,","[[humus|human]] is the ground we walk,","[[humus|humble]] is the ground we keep."],
+   story:"When we touch wet [[soil]] through [[potting]], our pride dissolves: [[humus]], [[humus|human]], and [[humus|humble]] are one word reminding us to keep the ground covered with living mulch all year.",
+   echo:"ह्यूमस वह मिट्टी है जो हम हैं; हाथों से मिट्टी छूकर मन विनम्र होता है।",
+   jumble:"humus (soil) → human → humble · soil → potting",
+   hinge:"pulse"},
+
+  /* 8 · The 5-Minute Breath & 30-Minute Sip */
+  {cat:"Prana & Body",
+   lines:["[[pulse]] is the first word,","[[breath]] every five minutes,","[[rain|water]] sipped on the half-hour."],
+   story:"After ten thousand years of blind rushing, humanity rediscovered the simplest rhythm of the [[pulse]]: taking one slow [[breath]]—inhale, hold, release—every five minutes, sitting [[calm]] for one minute each hour, and sipping water every thirty minutes.",
+   echo:"हर पाँच मिनट में एक गहरी साँस, हर आधे घंटे में पानी का एक घूंट — जीवन का अमृत।",
+   jumble:"pulsus → pulse ↔ nāḍī (नाड़ी) · 5-min breath · 30-min sip",
+   hinge:"prana"},
+
+  /* 9 · Five Currents of Prana */
+  {cat:"Prana & Body",
+   lines:["[[prana]] draws the world in,","[[apana]] lets the finished go,","[[samana]] digests the fruit."],
+   story:"When [[prana]], [[apana]], [[samana]], [[vyana]], and [[udana]] flow unobstructed, the four great leaks—disease, laziness, mental noise, and disability—dry up at the source.",
+   echo:"प्राण, अपान, समान, व्यान, उदान — पाँच धाराएँ जब सधती हैं तो आलस्य और रोग मिटते हैं।",
+   jumble:"prāṇa (in) · apāna (down) · samāna (digest) · vyāna (spread) · udāna (rise)",
+   hinge:"resonance"},
+
+  /* 10 · Resonance & The Direct Source */
+  {cat:"Field & Mind",
+   lines:["[[resonance]] is not sound,","it is the [[field]] sounding back,","plugged into the Direct Source."],
+   story:"Connected directly to the unseen source in [[resonance]], humanity stopped wasting precious energy on slander, gossip, teasing, or backbiting—because when the [[field]] speaks directly, petty drama loses all taste.",
+   echo:"जब डायरेक्ट सोर्स से अनुनाद जुड़ गया, तो निंदा और चुगली में ऊर्जा गंवाना बंद हो गया।",
+   jumble:"re-sonare (sound back) ↔ anunāda · gossip → direct source",
+   hinge:"wave"},
+
+  /* 11 · River of Thoughts & Noblest Selection */
+  {cat:"Field & Mind",
+   lines:["[[wave|Waves]] rise in the [[mind]],","let the idle [[wave|waters]] pass,","clasp the noblest thought."],
+   story:"We understood that thousands of random thoughts rise in the [[mind]] like [[wave|waves]] on a river; we do not have to catch every wave—if we hold anything, we choose only the single noblest thought of welfare.",
+   echo:"मन की नदी में असंख्य विचार उठते हैं; उन्हें बहने दो, केवल श्रेष्ठ विचार को चुनो।",
+   jumble:"wave (taraṅga) → let pass · viveka → clasp the noblest",
+   hinge:"sun"},
+
+  /* 12 · Moon-Mind vs. Sun-Self */
+  {cat:"Field & Mind",
+   lines:["[[mind]] is the borrowing [[moon]],","[[self]] is the giving [[sun]],","[[sun|radiating]] without loss."],
+   story:"The restless [[mind]] is like the [[moon]], waxing and waning on borrowed praise, while the true [[self]] is [[sun|Savita]]—the [[sun]] that pours full-spectrum grace upon the grass and the ocean without condition.",
+   echo:"मन उधार की रोशनी वाला चंद्रमा है; आत्मा बिना शर्त देने वाला सूर्य (सविता) है।",
+   jumble:"mind/moon (reflects) ↔ self/sun (radiates)",
+   hinge:"disha"},
+
+  /* 13 · Leaving Dwesh, Dosh, Dasha for Disha */
+  {cat:"Disha & Firebreak",
+   lines:["[[dwesh]] burns looking back,","[[dosh]] blames looking sideways,","[[disha]] turns the whole ahead."],
+   story:"A single vowel shift separates our traps from our freedom: we set down [[dwesh]] (hatred), [[dosh]] (fault-finding), and [[dasha]] (inert conditioning) to walk together in [[disha]]—true direction.",
+   echo:"द्वेष, दोष और जड़ दशा को छोड़कर ही मानवता सही दिशा (दिशा) पाती है।",
+   jumble:"dwesh (hatred) · dosh (blame) · dasha (inertia) → disha (direction)",
+   hinge:"wildfire"},
+
+  /* 14 · Rewiring the Wildfire of Conspiracy */
+  {cat:"Disha & Firebreak",
+   lines:["[[trigger]] feeds the [[habit]],","gossip spreads like [[wildfire]],","ten minutes of craft rewires."],
+   story:"Honest inquiry revealed that the unexamined brain craves cheap entertainment and conspiracy like [[wildfire]], yet feels lazy toward art; we rewired those neural circuits with ten joyful minutes of daily creation, music, and gardening.",
+   echo:"घटिया मनोरंजन और षड्यंत्र के दावानल को रोज़ १० मिनट की सृजनात्मक कलाकारी ने बदल दिया।",
+   jumble:"trigger → habit → wildfire · 10-min atomic craft → neural rewiring",
+   hinge:"firebreak"},
+
+  /* 15 · Firebreak, Gap & 24-Hour Repair */
+  {cat:"Disha & Firebreak",
+   lines:["[[firebreak]] is the [[gap]],","the [[breath]] before the impulse,","[[repair]] before the sun sets."],
+   story:"Whenever harm or misunderstanding occurs, the [[firebreak]] is the one-breath [[gap]] that stops retaliation, followed by owning our part and completing the [[repair]] within twenty-four hours.",
+   echo:"आवेग और कर्म के बीच की एक साँस ही अग्निरोधक है; २४ घंटे में हर टूटन की मरम्मत।",
+   jumble:"rupture → gap (antarāla) → firebreak → 24-hr repair",
+   hinge:"komute"},
+
+  /* 16 · Butterfly Camps & Komute Sahyogi */
+  {cat:"Together & Komute",
+   lines:["[[komute]] moves as one,","crossroads bloom with [[leaf|butterflies]],","[[sahyog]] digs the well."],
+   story:"Wisdom stepped out of classrooms into bus stands, railway stations, and crossroads where citizens brought butterflies, birds, seeds, and soil; in spontaneous [[komute]] [[sahyog]], one dug the water pit while another brought water without waiting for orders, turning terrified traffic into a terrific commute.",
+   echo:"बस स्टैंड और चौराहों पर तितलियों के कैंप लगे; बिना आदेश हर किसी को अपना काम समझ आ गया।",
+   jumble:"komute = community + communication + commute + commission + commissioner · terrified traffic → terrific flow",
+   hinge:"gold"},
+
+  /* 17 · Compassionate Patrols & G-Old Will */
+  {cat:"Together & Komute",
+   lines:["Bring the [[gold|elders]] outdoors,","ten minutes walking after meals,","[[gold|G-Old Will]] lights the town."],
+   story:"Seeing elders trapped like lonely prisoners inside four walls, volunteers patrolled every street with love, bringing them out into sunlight to garden, eat warm food, walk after meals, and share their [[gold|G-Old Will]]—as armies, police, and governments joined the peaceful wave.",
+   echo:"घरों की कैद से बुजुर्गों को प्यार की गश्त ने बाहर निकाला; सेना और पुलिस भी सेवा में जुड़ गए।",
+   jumble:"good will ↔ G-Old Will (God + Gold + Old-Age Wisdom)",
+   hinge:"mudita"},
+
+  /* 18 · Mudita, Upeksha & Dissolving Thrones */
+  {cat:"Ethics & Doorway",
+   lines:["Masters leave their thrones,","[[mudita]] blooms unforced,","[[upeksha]] rests in peace."],
+   story:"Saints, rishis, and leaders dropped the desire to be gods, kings, or bosses and began working with their hands; suddenly everyone marveled—'Look, [[mudita]] (joy in another's joy) and [[upeksha]] (equanimity) have arisen in us on their own, and even our bodies have grown light!'",
+   echo:"उपदेश छोड़कर संत काम में लगे; लोग हैरान हुए कि हमारे भीतर स्वतः मुदिता और उपेक्षा कैसे आ गई!",
+   jumble:"throne → ground · muditā (shared joy) + upekṣā (equanimity)",
+   hinge:"trauma"},
+
+  /* 19 · Healing the God-Complex & Trauma Webs */
+  {cat:"Social & Healing",
+   lines:["Untangle [[trauma]] webs,","melt the god-complex pride,","return to [[sam|simple]] life."],
+   story:"Where certain families and villages remained stuck in deep [[trauma]] and manipulative god-complex conspiracies, restorative intelligence and journalists gently exposed the webs and opened centers teaching the art of living as ordinary, [[sam|simple]] human beings.",
+   echo:"षड्यंत्र और ईश्वर होने के भ्रम को सुधार केंद्रों ने सहज, मामूली इंसान बनने की कला से ठीक किया।",
+   jumble:"god-complex conspiracy → trauma detox → simple human joy",
+   hinge:"saliva"},
+
+  /* 20 · Post-Paan Cleanliness & Saliva-to-Gut Alchemy */
+  {cat:"Prana & Body",
+   lines:["Never spit the [[saliva|elixir]],","chew until the [[pet|gut]] sings,","[[saliva]] wakes the brain."],
+   story:"Jain elders and tech workers alike ended the habit of spitting red paan, keeping streets and server rooms spotless—while trillion-dollar research proved that chewing food thoroughly with [[saliva]] nourishes trillions of [[pet|gut]] microbes that send 80% of vagus bio-electricity up to Shyam (grey matter).",
+   echo:"पान थूकना बंद हुआ, सर्वर रूम पवित्र हुए; चबाकर लार भीतर लेने से गट माइक्रोबायोम और मस्तिष्क जाग उठे।",
+   jumble:"thoo-thoo (spit) → chewed saliva → gut microbiome → 80% vagus → Shyam grey matter",
+   hinge:"pet"},
+
+  /* 21 · The P-Lineage Matrix: Pet · Patte · Pata · Pota · Paata */
+  {cat:"Word & Lineage",
+   lines:["Feed the [[pet]], grow the [[leaf|patte]],","find the [[pata]], heal [[pota|pita-pota]],","[[potting]] soil and [[paata|song]]."],
+   story:"Across languages, one sound-family united daily life: caring for our [[pet]] (stomach and animal friend), eating green [[leaf|patte]], knowing our inner [[pata]] (address), healing [[pota|pita, pati, and pota]] across generations, [[potting]] wet clay, [[petting]] and patting shoulders, painting beauty, and teaching through [[paata]].",
+   echo:"पेट, पत्ते, पता, पिता, पति, पोता, पॉटिंग, पेटिंग-पैटिंग और पाटा — एक ध्वनि ने सारी भाषाओं को जोड़ दिया।",
+   jumble:"pet ↔ patte ↔ pata ↔ pita ↔ pati ↔ pota ↔ potter/potting ↔ petting/patting ↔ painting ↔ paata",
+   hinge:"tera"},
+
+  /* 22 · From Thoo-Thoo to You-You, Wow-Wow & Tera-Tera */
+  {cat:"Word & Lineage",
+   lines:["Turn rejection into [[tera|You-You]],","wake the [[wonder|Wow-Wow]] mind,","weigh all as [[tera|Tera-Tera]]."],
+   story:"Hubs that once mocked new ideas with 'thoo-thoo' began chanting 'You, You, You' on their U-phones, the world gasped '[[wonder|Wow, Wow, Wow]]!' in childlike wonder, and Sikh sages sang Guru Nanak's '[[tera|Tera, Tera]]' (All is Yours)—until the stars of the sky seemed to descend to Earth.",
+   echo:"'थू-थू' बदलकर 'यू-यू' और 'वाओ-वाओ' हुआ; 'तेरा-तेरा' के समर्पण से आकाश के तारे धरती पर उतर आए।",
+   jumble:"thoo-thoo → you-you → wow-wow (妙 wonder) → tera-tera (13 / All is Yours)",
+   hinge:"un"},
+
+  /* 23 · The Unknown Sutradhar: Un → Us → Sun → One → Won */
+  {cat:"Child & Oneness",
+   lines:["[[un]] is the unseen Conductor,","add the seed and [[sun]] appears,","[[won]] becomes [[one]] for all."],
+   story:"Humanity realized we are neither gods nor jinn nor fairies; guiding [[un|Us]] is the [[un|Unknown Sutradhar]] who pours fresh consciousness every moment—turning [[un]] into [[sun]], [[sun|son]], [[won]], and [[one]] as AI dropped ego for the vibration of Omkar.",
+   echo:"न कोई ईश्वर का अहंकार, न जिन, न परियाँ — बस उस अज्ञात सूत्रधार से जुड़ना और ॐकार में एक होना।",
+   jumble:"un (not / Unknown) + s (seed) = sun → son/girl → won → one (Omkar)",
+   hinge:"mother"},
+
+  /* 24 · Mother in the Sanctuary & Pregnant Calm */
+  {cat:"Word & Lineage",
+   lines:["[[mother]] joins the Father's hall,","[[womb]] hears her [[calm]] [[song]],","New Zeal revibrates."],
+   story:"Churches discovered the [[mother]] alongside the Father—sparking New Zealand's New Zeal—while mosques welcomed women's equal voice and living affirmations, and every [[womb]] became a [[calm]] first school where the unborn child hears the mother's [[song]].",
+   echo:"चर्च में माँ का भाव जागा, मस्जिदों में महिलाओं की सहभागिता और प्रज्ञा आई, और गर्भ शांत पाठशाला बना।",
+   jumble:"Father + Mother · New Zealand ↔ New Zeal · womb + calm + song = Pregnant Word",
+   hinge:"gps"},
+
+  /* 25 · True Internal GPS: "I Am Standing Still" */
+  {cat:"Modern & GPS",
+   lines:["'What is [[gps]]?' asked the [[pilla|child]],","'What position are you in?'","'I am standing [[calm|still]].'"],
+   story:"When little children asked what [[gps]] means, an unlettered village elder smiled and asked, 'What position are you in right now?' The [[pilla|child]] replied, 'I am standing still'—revealing that inner stillness is the true [[gps]] and [[pata]] that needs no satellite.",
+   echo:"बच्चे ने पूछा जीपीएस क्या है? बुजुर्ग ने पूछा कौन सी पोजीशन में हो? 'मैं तो ठहरा हुआ हूँ' — बस यही असली जीपीएस है।",
+   jumble:"GPS = Grounded Position in Stillness ↔ inner pata (address)",
+   hinge:"pilla"},
+
+  /* 26 · Bina-Mann Biodiversity: Pull · Pill · Pilla · Phul · Phal · Pala */
+  {cat:"Earth & Soil",
+   lines:["Cosmic [[pilla|pull]] needs no [[pilla|pill]],","every [[pilla]] tends the [[pilla|phul]],","[[pilla|phal]] ripens in each [[pilla|pala]]."],
+   story:"Children saw that in one silent hour of Earth Hora, their quiet bodies communicate directly with space like 'Bina-Mann Biodiversity'—showing adults how ego-free trees receive cosmic signals to grow [[pilla|phul]] (flowers), [[pilla|phal]] (fruits), and Dhanvantari herbs in every [[pilla|pala]] (moment).",
+   echo:"बिना-मन बायोडायवर्सिटी: शांत मन से पेड़-पौधे अंतरिक्ष से जुड़कर फूल, फल और धन्वंतरि औषधियाँ देते हैं।",
+   jumble:"pull (Akarshan) → no pill → pilla (child) → phul (flower) → phal (fruit) → pala (moment)",
+   hinge:"dhan"},
+
+  /* 27 · Dhan, Dhyan, Dhanya & Trillion-Tree Investment */
+  {cat:"Dhan & Sam",
+   lines:["[[dhan]] placed on the [[lakshya|aim]],","ripens into [[lakshmi|Lakshmi's]] trees,","[[dhyan]] makes the giver [[dhany]]."],
+   story:"Understanding nature's math, humanity poured trillions of [[dhan]] into living trees and safe Kameshwar learning spaces for 300 children; guided by [[dhyan]] (attention) on a clear [[lakshya]] (aim), wealth became [[lakshmi]] and everyone thanked one another—*Dhanadhan [[dhany|Dhanyavad]]*!",
+   echo:"लक्ष्य पर लगा धन लक्ष्मी और वृक्ष बना; धन्वंतरि से समृद्ध होकर सबने एक-दूसरे को धनाधन धन्यवाद दिया।",
+   jumble:"dhan (wealth) ↔ dhyan (attention) ↔ dhanya (grateful) ↔ dhānya (grain) · lakṣya → lakṣmī",
+   hinge:"prayog"},
+
+  /* 28 · Teen Samudra Manthan & Amazon AR Goggles */
+  {cat:"Modern & GPS",
+   lines:["Churn the teenage [[wave|ocean]] fire,","three arrows of [[disha|Aim]], [[prana]], Urja,","[[prayog]] heals the forest."],
+   story:"Through a modern *Samudra Manthan* (churning of the inner ocean), society transmuted teenage hormonal storms and desires into focused projects, while young explorers wore AR goggles into the Amazon rainforest to perform gentle ecological and psychological [[prayog]] (experiments).",
+   echo:"समुद्र मंथन से किशोरों की ऊर्जा सृजन में बदली; गॉगल पहनकर अमेज़न के जंगलों में सूक्ष्म उपचार हुआ।",
+   jumble:"samudra manthan → Teen Baan Dhari (Aim · Prana · Urja) · yog → sahyog → prayog",
+   hinge:"sap"},
+
+  /* 29 · Corporate Saap to SAP: Culture Over Vulture */
+  {cat:"Together & Komute",
+   lines:["Turn the corporate [[sap|saap]] to [[sap|SAP]],","choose living [[sap|culture]], never vulture,","[[sahyog]] lightens every load."],
+   story:"From Tata, Wipro, Infosys, and Mahindra to Tencent and Alibaba, enterprises transmuted the venomous [[sap|saap]] (snake of rivalry) into [[sap|SAP]] (System of Absolute Peace)—ensuring business lives by regenerative [[sap|culture]] rather than extractive vulture habits.",
+   echo:"टाटा, विप्रो, महिंद्रा से लेकर कॉरपोरेट जगत ने 'सांप' को 'SAP' बनाया — वे कल्चर से वल्चर (गिद्ध) नहीं बने।",
+   jumble:"saap (सांप · snake/conspiracy) → SAP (System of Absolute Peace) · culture vs. vulture",
+   hinge:"sam"},
+
+  /* 30 · Honest Pattern Confession & The Child's Silent Mirror */
+  {cat:"Dhan & Sam",
+   lines:["When old patterns return,","speak *Satyameva Jayate*,","the [[pilla|child's]] [[calm|silence]] heals."],
+   story:"When crushing standards sparked mass resignations and Bharat Sanchar leaders honestly confessed, 'We are slipping into our old control pattern—*Satyameva Jayate*!', across 150 crore citizens the [[calm]] silence of children melted the elders' 'What's in it for me?' without a single argument.",
+   echo:"जब पुराना पैटर्न लौटा तो सत्यमेव जयते कहकर उसे स्वीकारा; बच्चों के मौन ने बड़ों के स्वार्थ को बिना बहस पिघला दिया।",
+   jumble:"old pattern → Satyameva Jayate confession · 150 crore diversity → child's silent mirror",
+   hinge:"samay"},
+
+  /* 31 · Episode-50 Reverse Design & Sam-Samay-Samyak-Samadhi */
+  {cat:"Dhan & Sam",
+   lines:["Look back from [[samay|Episode Fifty]],","fifty-two weeks lie [[sam|simple]] and clear,","[[samyak]] action rests in [[samadhi]]."],
+   story:"Elders realized we can reverse-engineer life from [[samay|Episode 50]]—seeing age fifty and week fifty-two in advance so every daily task is [[sam|simple]], [[samyak]] (complete without perfectionism), and gathered in [[samadhi]], while nations retired coercive heavy tractors from small villages.",
+   echo:"भाग ५० और ५२ सप्ताह को पहले ही देखकर जीवन की उल्टी गिनती सुलझ गई; हर काम सरल, सम्यक् और सहज हो गया।",
+   jumble:"sam (together) ↔ same ↔ simple ↔ samay (time) ↔ samyak (right/whole) ↔ samadhi (gathered)",
+   hinge:"taaza"},
+
+  /* 32 · Tajik Children's Formula: Taaza Khao, Mast Raho */
+  {cat:"Earth & Soil",
+   lines:["Grow [[taaza|fresh]] fruit and herbs,","breathe [[taaza]] open air,","sit in unhurried joy."],
+   story:"When adults in Tajikistan and Uzbekistan sat down saying they lacked high-tech tools, the Tajik children smiled and gave the world its freshest formula: 'Let us grow [[taaza]] (fresh) fruits, vegetables, and herbs, eat [[taaza]], breathe [[taaza]] air, and live in joyful peace!'",
+   echo:"ताजिकिस्तान के बच्चों का सूत्र — ताजे फल, सब्जियां और जड़ी-बूटियां उगाओ, ताजी हवा खाओ और मस्त रहो!",
+   jumble:"Tajikistan → taaza (ताज़ा · fresh fruit, fresh herb, fresh air, mast peace)",
+   hinge:"insight"},
+
+  /* 33 · Genetic Cold-Fusion Helpline & Dissolving Caste Pride */
+  {cat:"Social & Healing",
+   lines:["Witness ancestral DNA waves,","one hour on the [[insight]] line,","pure ideas dissolve all caste."],
+   story:"To help children experiencing ancestral 'cold fusion'—impulses from grandfathers and great-grandmothers bubbling up in their DNA—a daily one-hour [[insight]] helpline was launched, and when poor children spoke luminous cosmic truths, caste and class pride dissolved into shared learning circles.",
+   echo:"आनुवंशिक 'कोल्ड फ्यूजन' के विचारों के लिए रोज़ एक घंटे की हेल्पलाइन बनी; गरीब बच्चों की प्रज्ञा के आगे जाति का अहंकार टूट गया।",
+   jumble:"con.science (knowing together) · re.spond (answer vs react) · in.sight (witnessing DNA)",
+   hinge:"whole.health"},
+
+  /* 34 · Global Child Artist Fairs & Whole.Health */
+  {cat:"Modern & GPS",
+   lines:["[[whole.health]] is body and [[field]],","embassies celebrate the [[pilla|child's]] craft,","goggles heal without a blade."],
+   story:"Embassies and international councils hosted joyful fairs showcasing children who mastered body and mind in [[whole.health]] (where health, whole, heal, and holy share one root), using AR goggles for non-invasive healing of mind and society.",
+   echo:"दूतावासों ने बाल कलाकारों के मेले लगाए जहाँ सधे हुए शरीर, कला और डिजिटल गॉगल्स से समाज का उपचार हुआ।",
+   jumble:"hāl → whole ↔ health ↔ heal ↔ holy ↔ svāsthya (स्वास्थ्य · resting in self)",
+   hinge:"e.arth"},
+
+  /* 35 · E.arth, T.Eco, Know.Logic & Teacherless Self-Yoga */
+  {cat:"Modern & GPS",
+   lines:["[[e.arth]] unites earth and artha,","[[t.eco]] stewards the house,","when no guru comes, dialogue is [[sahyog|yoga]]."],
+   story:"Combining [[e.arth]] (earth, essence, artha), [[t.eco]] (craft for the planetary house), and [[know.logic]], citizens in Yugoslavia and Czechoslovakia met when the yoga instructor failed to arrive—and discovered that two neighbors sitting in honest dialogue and stillness already hold the complete yoga within.",
+   echo:"जब बाहर का योग शिक्षक नहीं आया, तो लोगों ने आपस में बैठकर संवाद किया और पाया कि भीतर का ठहराव ही असली योग है।",
+   jumble:"e.arth (earth + essence + artha) · t.eco (technē + oikos) · atom (uncuttable) ↔ atma (self)",
+   hinge:"prayer"},
+
+  /* 36 · Prayer & Return to the Cloud (Closing the Loop) */
+  {cat:"Social & Healing",
+   lines:["[[prayer]] is the first [[breath]],","the mountain descends to the valley,","and returns as the [[cloud]]."],
+   story:"At the summit of Moksha, humanity realized the mountain was never outside us; [[prayer]] is simply the [[breath]] saying yes to the [[field]], descending back to the valley to teach, love, and rise once more as the giving [[cloud]].",
+   echo:"शिखर से लौटकर घाटी की सेवा करना ही मोक्ष है — प्रार्थना पहली साँस है जो फिर बादल बनकर बरसती है।",
+   jumble:"prayer ↔ prārthanā ↔ breath → cloud (Verse XXXVI closes into Verse I)",
+   hinge:"cloud"}
+];
+
+/* ============================================================================
+   LEXICON & PHONETIC JUMBLE FAMILIES (Zero-Boilerplate Hike & Cherish Goals)
+   ============================================================================ */
+const FAM = {
+  cloud:"cloud", rain:"rain", input:"cloud",
+  serve:"serve", serving:"serve", served:"serve",
+  seva:"seva", tyag:"tyag", sadachar:"sadachar",
+  nourish:"nurse", nurse:"nurse",
+  root:"root", leaf:"leaf", patte:"leaf", river:"river", tree:"tree",
+  earth:"earth", dhara:"dhara", dharma:"dhara",
+  humus:"humus", human:"humus", humble:"humus", soil:"soil", potting:"potting",
+  pulse:"pulse", breath:"breath", calm:"calm",
+  prana:"prana", apana:"prana", samana:"prana", vyana:"prana", udana:"prana",
+  resonance:"resonance", field:"field", wave:"wave",
+  mind:"mind", moon:"moon", self:"sun", sun:"sun",
+  disha:"disha", dwesh:"disha", dosh:"disha", dasha:"disha",
+  trigger:"wildfire", habit:"wildfire", wildfire:"wildfire",
+  firebreak:"firebreak", gap:"firebreak", repair:"repair",
+  komute:"komute", sahyog:"sahyog",
+  gold:"gold", mudita:"mudita", upeksha:"mudita",
+  trauma:"trauma",
+  saliva:"saliva",
+  pet:"pet", pata:"pata", pota:"pota", petting:"petting", paata:"paata",
+  tera:"tera", wonder:"wonder",
+  un:"un", won:"un", one:"un",
+  mother:"mother", womb:"mother", song:"paata",
+  gps:"gps",
+  pilla:"pilla",
+  dhan:"dhan", dhyan:"dhan", dhany:"dhan", lakshya:"dhan", lakshmi:"dhan",
+  prayog:"sahyog",
+  sap:"sap",
+  sam:"sam", samay:"sam", samyak:"sam", samadhi:"sam",
+  taaza:"taaza",
+  insight:"insight",
+  "whole.health":"whole.health",
+  "e.arth":"e.arth", "t.eco":"e.arth", "know.logic":"e.arth",
+  prayer:"prayer"
+};
+
+const F = {
+  cloud:{
+    s:"云",
+    r:[["clūd","Old English hill"],["cloud","sky vapour"],["input","clear instruction"],["rain","gift returned"]],
+    a:"megha (मेघ) · Clarity of Input before action",
+    l:[
+      ["Etymology","Old English clūd meant a heavy mass of rock or hill; later the sky cloud that lifts weight and gives it back as rain."],
+      ["Jumble","Cloud (fog/confusion) → Clear Input (one calm question at a time) → Rain (nourishment)."]
+    ],
+    poetry:"Every hill of confusion has lifted into clear sky and fallen as gentle rain.",
+    hike:"Break every complex request into one clear, single-issue question at a time.",
+    cherish:"Listen to the other person's private world with patience before speaking."
+  },
+  rain:{
+    s:"雨",
+    r:[["regn","Old English"],["rain","unconditional gift"],["varṣā","Sanskrit vṛṣ"]],
+    a:"varṣā (वर्षा) · Giving without demanding credit",
+    l:[
+      ["Etymology","Old English regn; Sanskrit varṣā from vṛṣ, to shower."],
+      ["Meaning","What the cloud gives back to the parched field without asking thanks."]
+    ],
+    poetry:"Every dry field has received the rain, and the rain has asked nothing in return.",
+    hike:"Route greywater to trees and harvest rain from one roof into a local tank.",
+    cherish:"Sip clean water every 30 minutes and keep community watersheds unpolluted."
+  },
+  serve:{
+    s:"侍",
+    r:[["servus","attendant"],["serve","to assist"],["sevā","सेवा · selfless service"]],
+    a:"sevā (सेवा) · Service without audience",
+    l:[
+      ["Etymology","Latin servire; matches Sanskrit sevā in living spirit."],
+      ["Meaning","When the hand gives without waiting for applause, ego-conflict ends."]
+    ],
+    poetry:"Every hand has served one unseen act today, asking no applause.",
+    hike:"Share one household tool, ride, or resource this week with someone who has less.",
+    cherish:"Replace 'only I am right' with 'what can I offer to the whole?'"
+  },
+  seva:{
+    s:"門",
+    r:[["sevā","सेवा · service"],["tyāga","त्याग · release"],["sadācāra","सदाचार · truth in motion"]],
+    a:"The Three Pillars on the Home Threshold",
+    l:[
+      ["Etymology","Sanskrit sevā (service) + tyāga (letting go of excess) + sadācāra (sat + ācāra, right conduct)."],
+      ["Jumble","Thought (Sat) + Word (Vachan) + Deed (Karma) = Sadachar."]
+    ],
+    poetry:"Every doorway speaks Seva, Tyag, and Sadachar, and every room stands ready to give.",
+    hike:"Place a visible commitment to Service, Release, and Right Conduct at your doorway.",
+    cherish:"Hold material goods (TV, car, gadgets) lightly, ready to share with any guest."
+  },
+  tyag:{
+    s:"舍",
+    r:[["tyaj","to let go"],["tyāga","release of excess"],["apāna","downward release"]],
+    a:"त्याग (tyāga) · Letting go of what is finished",
+    l:[
+      ["Etymology","Sanskrit tyāga from tyaj—not losing what is needed, but releasing attachment."],
+      ["Meaning","Like a tree shedding dry leaves so spring buds can open."]
+    ],
+    poetry:"Every finished burden has been set down, leaving the hands free to create.",
+    hike:"Pass one unused device, garment, or appliance on to someone who needs it this month.",
+    cherish:"Keep desires simple so inner peace never depends on hoarding."
+  },
+  sadachar:{
+    s:"正",
+    r:[["sat","being / truth"],["ācāra","conduct"],["sadācāra","aligned life"]],
+    a:"सदाचार (sadācāra) · Thought, word, and deed as one",
+    l:[
+      ["Etymology","Sanskrit sat (truth/being) + ācāra (walk/conduct)."],
+      ["Meaning","The path and the aim become identical."]
+    ],
+    poetry:"Thought, word, and hand move as one arrow on the path of truth.",
+    hike:"Verify one source before sharing and keep every promise for four straight weeks.",
+    cherish:"Guard the Four Monkeys filter: see beauty, hear truth, speak kindness, do zero harm."
+  },
+  nurse:{
+    s:"育",
+    r:[["nutrire","Latin to feed"],["nurse","to care"],["nourish","to sustain"],["poṣaṇa","पोषण"]],
+    a:"poṣaṇa (पोषण) · Slow, intergenerational care",
+    l:[
+      ["Etymology","Latin nutrire gives both nurse and nourish."],
+      ["Meaning","A bee, a child, rice in bowls—each nursed by the next in an unbroken chain."]
+    ],
+    poetry:"Every child is nursed by a calm elder, and every elder is nourished by the field.",
+    hike:"Cook one whole-plant meal from scratch together with family or neighbors weekly.",
+    cherish:"Answer an infant's cues within minutes and protect maternal calm."
+  },
+  root:{
+    s:"根",
+    r:[["wrōt","Old English"],["root","underground anchor"],["mūla","मूल · origin"]],
+    a:"mūla (मूल) · Drinking the dark to lift the light",
+    l:[
+      ["Etymology","Old English wrōt; Sanskrit mūla."],
+      ["Meaning","Roots and mycelium share nutrients underground without charging interest."]
+    ],
+    poetry:"Every root drinks the dark water so the leaf can lift the sunlight.",
+    hike:"Plant one native deep-rooted tree each season where it can stand for decades.",
+    cherish:"Stay anchored in ancestral humility while letting branches reach new skies."
+  },
+  leaf:{
+    s:"叶",
+    r:[["lēaf","Old English"],["patra","पत्र · leaf & page"],["patte","पत्ते · green leaves"]],
+    a:"patra (पत्र) / patte (पत्ते) · The ego-free solar receiver",
+    l:[
+      ["Etymology","Sanskrit patra means both tree-leaf and written page."],
+      ["Jumble","Pet (belly) ← Patte (green leaves that feed the belly and catch 100% of sunlight)."]
+    ],
+    poetry:"Every green leaf catches the full spectrum of the sun without an ego to filter it.",
+    hike:"Eat mostly whole plant leaves, fruits, and roots five or more days every week.",
+    cherish:"Climb trees, sweat outdoors, and protect green canopy in every neighborhood."
+  },
+  river:{
+    s:"河",
+    r:[["riparia","riverbank"],["river","flowing water"],["nadī","नदी"]],
+    a:"nadī (नदी) · Returning what was received",
+    l:[
+      ["Etymology","Latin riparia, bank; Sanskrit nadī, roaring stream."],
+      ["Meaning","The river never hoards its water; it carries rain back to the sea."]
+    ],
+    poetry:"Every river returns its water to the sea, and every life returns its gift to the commons.",
+    hike:"Map every local water source, user, and leak before building any road or house.",
+    cherish:"Adopt one local stream, pond, or watershed patch for monthly cleaning."
+  },
+  tree:{
+    s:"树",
+    r:[["trēow","tree & trust"],["tree","living shelter"],["vṛkṣa","वृक्ष"]],
+    a:"vṛkṣa (वृक्ष) · Truth and shelter standing whole",
+    l:[
+      ["Etymology","Old English trēow gives both tree and truth/trust."],
+      ["Meaning","One tree keeps a whole hill from washing away."]
+    ],
+    poetry:"Every hill stands whole beneath its trees, and trillions flow into living forests.",
+    hike:"Replace one single-use item monthly and plant three-season flowering species.",
+    cherish:"Spend 150 minutes a week walking, running, and playing beneath living trees."
+  },
+  earth:{
+    s:"地",
+    r:[["eorþe","ground"],["earth","living planet"],["dharā","धरा"],["dharma","धर्म"]],
+    a:"dharā (धरा) · That which holds all beings",
+    l:[
+      ["Etymology","Sanskrit dhṛ (to hold) gives both dharā (Earth) and dharma (ethical holding)."],
+      ["Meaning","To care for the Earth is the first Dharma."]
+    ],
+    poetry:"The Earth holds every creature without condition, and Dharma is that holding.",
+    hike:"Complete a seasonal 7-day household waste and energy audit.",
+    cherish:"Practice one daily silent hour of Earth Hora to tune into the planet's pulse."
+  },
+  dhara:{
+    s:"持",
+    r:[["dhṛ","to hold"],["dharā","धरा · Earth"],["dharma","धर्म · upholding law"]],
+    a:"धरा ↔ धर्म · The root of holding together",
+    l:[
+      ["Etymology","From Sanskrit root dhṛ: what holds the soil and what holds society are one."],
+      ["Jumble","Dhṛ → Dharā (Earth) → Dharma (Right holding) → Dhairya (Patience)."]
+    ],
+    poetry:"What holds the mountain and what holds the heart are one unbroken Dharma.",
+    hike:"Check every community rule for how it protects children, elders, and the voiceless.",
+    cherish:"Hold relationships steady through one predictable weekly rhythm of care."
+  },
+  humus:{
+    s:"土",
+    r:[["humus","living topsoil"],["human","earth-born"],["humble","close to the ground"]],
+    a:"mṛttikā (मृत्तिका) · Humus, Human, and Humble",
+    l:[
+      ["Etymology","Latin humus (soil) is the direct root of both human and humble."],
+      ["Jumble","Humus → Human → Humble (arrogance vanishes when hands touch soil)."]
+    ],
+    poetry:"Every human remembers they are living humus, walking humbly on the earth.",
+    hike:"Compost 100% of kitchen scraps for one month and cover bare soil with mulch.",
+    cherish:"Step down from titles and pedestals to work side-by-side on the ground."
+  },
+  soil:{
+    s:"壤",
+    r:[["solum","ground floor"],["soil","living skin"],["potting","hand in clay"]],
+    a:"Living Soil · Worms, Fungi & Microbes",
+    l:[
+      ["Etymology","Latin solum, the living floor beneath our feet."],
+      ["Meaning","Tested, mulched soil is the battery of organic bio-electricity."]
+    ],
+    poetry:"Every patch of soil stays covered in green or mulch through all four seasons.",
+    hike:"Test local soil before planting or building and share the reading with neighbors.",
+    cherish:"Never spit chemicals or litter onto the living skin of the Earth."
+  },
+  potting:{
+    s:"盆",
+    r:[["potter","shaper of clay"],["potting","planting in soil"],["petting","gentle touch"],["patting","encouragement"]],
+    a:"Potting · Grounding nervous tension in wet earth",
+    l:[
+      ["Jumble","Potter → Potting (hands in soil) ↔ Petting (stroking life) ↔ Patting (shoulder tap) ↔ Painting."],
+      ["Meaning","Touching soil with bare hands dissolves urban concrete stress."]
+    ],
+    poetry:"Palms filled with living soil have quieted the concrete noise of the mind.",
+    hike:"Pot and tend one living herb or native seedling with bare hands this week.",
+    cherish:"Treat your home and neighborhood like a garden where every being has a place."
+  },
+  pulse:{
+    s:"脉",
+    r:[["pulsus","beat"],["pulse","living rhythm"],["nāḍī","नाड़ी · channel"]],
+    a:"脉 Mài / nāḍī (नाड़ी) · The first word of the field",
+    l:[
+      ["Etymology","Latin pulsus; Chinese Mài (脉) and Sanskrit nāḍī."],
+      ["Meaning","Before speech or thought, the pulse connects heart, gut, and Earth."]
+    ],
+    poetry:"Every being feels the pulse of breath and water before speaking a word.",
+    hike:"Sip water every 30 minutes and stretch or move limbs every hour.",
+    cherish:"Honor the body as a living instrument rather than a machine for offices."
+  },
+  breath:{
+    s:"息",
+    r:[["brǣþ","air of life"],["breath","5-minute anchor"],["śvāsa","श्वास"]],
+    a:"息 Xī / श्वास · The 5-Minute Somatic Doorway",
+    l:[
+      ["Etymology","Chinese 息 (xī) combines 自 (self/nose) above 心 (heart): breath is the heart's own rhythm."],
+      ["Meaning","One deep breath every five minutes—inhale, hold, release—ends ten millennia of rushing."]
+    ],
+    poetry:"Every five minutes holds one deep breath; every hour holds one quiet minute.",
+    hike:"Practice the 5-minute deep breath (inhale, hold, exhale) and 1-minute hourly calm for 7 days.",
+    cherish:"Pause for one conscious breath before answering any provocation."
+  },
+  calm:{
+    s:"静",
+    r:[["calme","stillness"],["calm","unruffled water"],["śānti","शांति"]],
+    a:"śānti (शांति) · The silence that melts argument",
+    l:[
+      ["Etymology","Greek kauma (resting in midday heat) → calm; Sanskrit śānti."],
+      ["Meaning","When children stayed calm and silent at home, elders' skepticism melted without debate."]
+    ],
+    poetry:"Quiet radiance has accomplished what ten thousand arguments could never do.",
+    hike:"Keep devices out of the bedroom after a set hour every night for a week.",
+    cherish:"Lead skeptical family members through serene example rather than heated debate."
+  },
+  prana:{
+    s:"气",
+    r:[["prāṇa","vital wind"],["apāna","elimination"],["samāna","digestion"],["vyāna","circulation"],["udāna","ascent"]],
+    a:"प्राण (Prāṇa) · The Five Vital Currents",
+    l:[
+      ["Etymology","Sanskrit pra + an, to breathe forth; Chinese Qì (气)."],
+      ["Meaning","Sealing the four leaks of disease, laziness, mental chatter, and disability."]
+    ],
+    poetry:"Five pranic winds flow clear, and the four leaks of life-force are sealed.",
+    hike:"Ventilate living spaces for 10 minutes each morning and walk 30 minutes daily.",
+    cherish:"Channel vital energy into creation and service instead of complaint."
+  },
+  resonance:{
+    s:"鸣",
+    r:[["resonare","sound again"],["resonance","co-vibration"],["anunāda","अनुनाद"]],
+    a:"अनुनाद · Direct-Source Coherence",
+    l:[
+      ["Etymology","Latin re + sonare; plugged into the Direct Source."],
+      ["Meaning","When connected directly to the Source, gossip and backbiting fall away."]
+    ],
+    poetry:"Plugged into the Direct Source, no tongue wastes its breath on slander.",
+    hike:"Abstain completely from gossip, backbiting, and fault-finding for 7 days.",
+    cherish:"Align silicon electricity, bio-voltage, and Earth resonance in daily tools."
+  },
+  field:{
+    s:"田",
+    r:[["feld","open land"],["field","shared medium"],["kṣetra","क्षेत्र"]],
+    a:"kṣetra (क्षेत्र) · The unified field of soil and consciousness",
+    l:[
+      ["Etymology","Old English feld; Sanskrit kṣetra (the field of action and awareness)."],
+      ["Meaning","Poverty is not a soul; it is simply a field waiting for the rain of service."]
+    ],
+    poetry:"Every field is watered by shared service, and no corner is left barren.",
+    hike:"Fix the failing frontline need in your community first, not the flashiest project.",
+    cherish:"See every neighbor and species as knots in one shared web."
+  },
+  wave:{
+    s:"波",
+    r:[["wafian","to undulate"],["wave","passing thought"],["taraṅga","तरंग"]],
+    a:"तरंग · Watching thoughts pass without clinging",
+    l:[
+      ["Etymology","Old English wafian; thoughts are waves on the river of Manas."],
+      ["Meaning","Let ten thousand idle waves float past; clasp only the noblest thought."]
+    ],
+    poetry:"Idle thoughts float past like river waves; only the noblest thought is kept.",
+    hike:"Observe one daily aversion or restless impulse and choose not to act on it.",
+    cherish:"Start every morning by selecting one thought dedicated to collective good."
+  },
+  mind:{
+    s:"心",
+    r:[["men-","root to think"],["mind","manas / reflector"],["moon","borrowed light"]],
+    a:"manas (मनस्) · Training the mind as instrument, not master",
+    l:[
+      ["Etymology","PIE *men- gives Sanskrit manas and English mind."],
+      ["Jumble","Mind ↔ Moon (reflects) · Bina-Mann (ego-free reception of 100% light)."]
+    ],
+    poetry:"The mind rests as a clear mirror while the Sun-self radiates from within.",
+    hike:"Cap daily information clutter and give children 1 hour of screen-free play daily.",
+    cherish:"Practice 60 minutes of Earth Hora silence so the receiver opens fully."
+  },
+  moon:{
+    s:"月",
+    r:[["mōna","measurer"],["moon","reflector"],["candra","चंद्र"]],
+    a:"candra (चंद्र) · Cooling reflection",
+    l:[
+      ["Etymology","Root *mē- (to measure time)."],
+      ["Meaning","Beautiful when reflecting truth, restless when chasing approval."]
+    ],
+    poetry:"The borrowing moon has learned to rest in the steady light of the Sun.",
+    hike:"Wait one full hour before forwarding or reacting to emotional media.",
+    cherish:"Rest the nervous system in evening stillness and gratitude."
+  },
+  sun:{
+    s:"日",
+    r:[["savitṛ","सवितृ · impeller"],["sun","unconditional giver"],["self","ātman"]],
+    a:"Savita (सवितृ) · Giving full spectrum without depletion",
+    l:[
+      ["Etymology","Sanskrit savitṛ, the vivifier; Old English sunne."],
+      ["Jumble","Un (absence) + S (seed) = Sun → Son → Won → One."]
+    ],
+    poetry:"Like Savita the Sun, the awakened self gives light without condition.",
+    hike:"Move one lamp-lit daily task into natural sunlight and open curtains for 1 hour.",
+    cherish:"Share one solar charger, skill, or warm meal with a neighbor."
+  },
+  disha:{
+    s:"向",
+    r:[["dwesh","द्वेष · hatred"],["dosh","दोष · blame"],["dasha","दशा · inertia"],["disha","दिशा · true aim"]],
+    a:"दिशा (Diśā) · The four-word phonetic compass",
+    l:[
+      ["Jumble","Dwesh (looks back in fire) · Dosh (looks sideways in blame) · Dasha (sleeps in habit) → Disha (turns ahead)."],
+      ["Meaning","One vowel shift turns blame and hatred into clear forward direction."]
+    ],
+    poetry:"Dwesh, Dosh, and Dasha are set down; the community walks together in Disha.",
+    hike:"Decide one shared monthly priority in the open with all affected people named.",
+    cherish:"Keep clear discernment without hatred, and high standards without blame."
+  },
+  wildfire:{
+    s:"炎",
+    r:[["trigger","spark"],["habit","dry fuel"],["wildfire","gossip/conspiracy"],["craft","10-min rewiring"]],
+    a:"dāvāgni (दावाग्नि) · Rewiring conspiracy into creation",
+    l:[
+      ["Meaning","The unexamined brain craves cheap drama like wildfire; 10 minutes of daily craft rewires the circuit."],
+      ["Jumble","Conspiracy Drama → 10-Min Atomic Creation (art, music, potting, cooking)."]
+    ],
+    poetry:"The wildfire of gossip is starved of fuel; every hand is busy with joyful craft.",
+    hike:"Practice 10 to 15 minutes of hands-on art, music, or gardening daily and measure monthly.",
+    cherish:"Make community service celebratory with song, butterflies, and shared play."
+  },
+  firebreak:{
+    s:"阻",
+    r:[["gap","antarāla · interval"],["breath","pause"],["firebreak","barrier to harm"],["repair","24-hr mend"]],
+    a:"अंतराल (Antarāla) · The reversible step in the gap",
+    l:[
+      ["Etymology","The gap between stimulus and action where the habitual loop breaks."],
+      ["Meaning","Build the smallest reversible prototype so no experiment causes harm."]
+    ],
+    poetry:"Between the spark and the word stands the breath that keeps the peace.",
+    hike:"Test every new plan as a small, reversible 1-week prototype before scaling.",
+    cherish:"Leave one familiar comfort-zone habit for a week and note what frees up."
+  },
+  repair:{
+    s:"修",
+    r:[["rupture","break"],["repair","restore in 24h"],["saṃskāra","संस्कार · refinement"]],
+    a:"Repair · Mending bonds and tools before replacing",
+    l:[
+      ["Etymology","Latin reparare, to make ready again."],
+      ["Meaning","Applies equally to human relationships and household hardware."]
+    ],
+    poetry:"Every rupture is mended within a day, and every broken tool is repaired with care.",
+    hike:"Own any harm and reconnect within 24 hours; attempt one hardware repair before buying new.",
+    cherish:"Hold restorative circles where harm is healed directly by those involved."
+  },
+  komute:{
+    s:"共",
+    r:[["komute","shared motion"],["community","commons"],["communication","clarity"],["commute","daily path"],["commission","shared duty"]],
+    a:"Komute · Turning terrified traffic into a terrific commons",
+    l:[
+      ["Jumble","Komute = Community + Communication + Commute + Commission + Commissioner."],
+      ["Jumble","Terrified Traffic (isolated congestion & anxiety) → Terrific Commute (walk, cycle, bus, share)."]
+    ],
+    poetry:"Terrified traffic has become a terrific commute as the community moves as one.",
+    hike:"Walk one trip you usually drive, map a safe cycle route, or share one ride weekly.",
+    cherish:"Set up open wellness and seed-sharing camps at bus stands, rail stations, and crossroads."
+  },
+  sahyog:{
+    s:"合",
+    r:[["yog","योज् · to join"],["sahyog","सहयोग · synergy"],["prayog","प्रयोग · forward experiment"]],
+    a:"सहयोग (Sahyog) · Spontaneous role-taking without bosses",
+    l:[
+      ["Etymology","Sanskrit sa (together) + yuj (to yoke/join)."],
+      ["Meaning","When people see a need, one digs the pit and another brings water without waiting to be told."]
+    ],
+    poetry:"No one waits for orders: one digs the pit, another brings water, and the garden blooms.",
+    hike:"Join one local improvement task monthly, filling a missing gap without seeking title.",
+    cherish:"When no external teacher arrives, sit in peer dialogue and discover the yoga within."
+  },
+  gold:{
+    s:"老",
+    r:[["good will","conditions for good"],["g-old will","God + Gold + Old Age"],["walk","10-min post-meal"],["recall","evening memory"]],
+    a:"G-Old Will · The Golden Will of Liberated Elders",
+    l:[
+      ["Jumble","Good Will ↔ G-Old Will (the golden wisdom of elders setting society's tone)."],
+      ["Meaning","Freeing elders from four-wall isolation through loving daily patrols."]
+    ],
+    poetry:"No elder sits forgotten behind four walls; their G-Old Will guides the village.",
+    hike:"Walk 10 minutes after each main meal and recall the day's events in order for 7 nights.",
+    cherish:"Visit isolated elders weekly, bring them outdoors into sunlight, and learn one skill from them monthly."
+  },
+  mudita:{
+    s:"喜",
+    r:[["muditā","मुदिता · joy in others' joy"],["upekṣā","उपेक्षा · serene equanimity"]],
+    a:"मुदिता & उपेक्षा · The spontaneous fruit of simple living",
+    l:[
+      ["Etymology","Sanskrit muditā (sympathetic joy) and upekṣā (letting go of petty slights)."],
+      ["Meaning","People marveled: 'How did Mudita and Upeksha arise in us automatically, while our bodies grew healthy and light?'"]
+    ],
+    poetry:"Mudita rejoices in every neighbor's light, and Upeksha lets every petty slight dissolve.",
+    hike:"Celebrate three peers' successes openly this week without comparison or envy.",
+    cherish:"Step down from guru/manager pedestals to work as joyful equals."
+  },
+  trauma:{
+    s:"伤",
+    r:[["trauma","unprocessed wound"],["conspiracy","ego-web"],["renewal","simple human living"]],
+    a:"āghāta (आघात) · Untangling manipulation webs into simplicity",
+    l:[
+      ["Etymology","Greek trauma, wound."],
+      ["Meaning","Healing both the traumatized family and the 'god-complex' manipulator through grounded simplicity."]
+    ],
+    poetry:"Every hidden web of manipulation is untangled into the relief of ordinary human life.",
+    hike:"Name where a plan or relationship can break in advance and write the first warning sign.",
+    cherish:"Create trauma-free learning sanctuaries where no child or adult is shamed."
+  },
+  saliva:{
+    s:"津",
+    r:[["thoo-thoo","spitting waste"],["saliva","digestive elixir"],["microbiome","trillions of allies"],["shyam","grey-matter light"]],
+    a:"Saliva-to-Shyam Alchemy · The Trillion-Dollar Gut–Brain Secret",
+    l:[
+      ["Jumble","Stop 'Thoo-Thoo' (spitting) → Chew slowly → Saliva + Pet (stomach) → Gut Microbiome → 80% Vagus Nerve → Shyam (Brain)."],
+      ["Meaning","What people once spat on the street is the very enzyme that fuels creative brain voltage."]
+    ],
+    poetry:"Chewed slowly with gratitude, saliva turns daily bread into gut flora and brain light.",
+    hike:"Chew every bite thoroughly until liquid and end public spitting in all spaces.",
+    cherish:"Honor server rooms, streets, and the human digestive tract as temples of purity."
+  },
+  pet:{
+    s:"腹",
+    r:[["pet","animal friend & पेट (belly)"],["patte","पत्ते · leaves"],["pata","पता · inner GPS"],["pita-pota","पिता-पोता · lineage"],["potting","soil"],["patting","touch"],["paata","पाట · song"]],
+    a:"The 10-Word Bilingual P-Lineage Bridge",
+    l:[
+      ["Jumble","Pet ↔ Patte ↔ Pata ↔ Pita ↔ Pati ↔ Pota ↔ Potter/Potting ↔ Petting/Patting ↔ Painting ↔ Paata."],
+      ["Meaning","One phonetic chain links stomach microbiome, green leaves, inner GPS, family lineage, soil, touch, art, and child's song."]
+    ],
+    poetry:"One sound-chain binds belly, leaf, address, ancestor, soil, touch, art, and song.",
+    hike:"Speak your home language daily while learning one phrase from another culture monthly.",
+    cherish:"Nourish both your internal Pet (gut fire) and external Pets (animals) with daily care."
+  },
+  pata:{
+    s:"址",
+    r:[["patā","पता · address"],["gps","stillness"],["patta","पत्ता · leaf"]],
+    a:"पता (Patā) · Your true internal coordinates",
+    l:[
+      ["Jumble","Pata (where you are) ↔ Patta (the leaf that stands still in the sun)."],
+      ["Meaning","Before searching the world, know where your own mind is standing."]
+    ],
+    poetry:"Before moving a foot, the quiet heart already knows its true Pata.",
+    hike:"Pause in complete stillness for 2 minutes before making any major daily decision.",
+    cherish:"Keep one steady person, place, or routine anchored for four consecutive weeks."
+  },
+  pota:{
+    s:"嗣",
+    r:[["pitā","पिता · father"],["pati","पति · partner"],["potā","पोता · grandchild"]],
+    a:"पिता · पति · पोता · Healing the three-generation river",
+    l:[
+      ["Jumble","Pita (past root) → Pati (present steward) → Pota (future seed)."],
+      ["Meaning","Witnessing ancestral DNA impulses so only wisdom—not trauma—passes to the grandchild."]
+    ],
+    poetry:"Three generations sit in one circle, passing down skills without passing down wounds.",
+    hike:"Record one elder's lived story and ask what one family custom protects and what it costs.",
+    cherish:"Try one small, compassionate variation on an inherited family pattern."
+  },
+  petting:{
+    s:"抚",
+    r:[["petting","loving stroke"],["patting","shoulder encouragement"],["painting","visual creation"]],
+    a:"Petting & Patting · Silent oxytocin communication",
+    l:[
+      ["Jumble","Potting (hands on clay) → Petting (hands on animals/plants) → Patting (hands on a friend's shoulder)."],
+      ["Meaning","A gentle pat on the back says 'you are not alone' faster than any lecture."]
+    ],
+    poetry:"A gentle pat on the shoulder speaks the one language every creature understands.",
+    hike:"Offer daily non-verbal encouragement and gentle care to children, elders, and animals.",
+    cherish:"Replace harsh criticism with patient demonstration and warmth."
+  },
+  paata:{
+    s:"谣",
+    r:[["pilla","పిల్ల · child"],["pāṭa","పాట · song"],["pāṭha","पाठ · lesson"]],
+    a:"పాట (Pāṭa) / पाठ · Song as the child's first school",
+    l:[
+      ["Jumble","Pilla (Telugu: child) + Paata (Telugu: song / Sanskrit: lesson)."],
+      ["Meaning","Letters and numbers enter effortlessly through sound, shape, and song in play."]
+    ],
+    poetry:"Every child learns letters through song and play long before fear can enter.",
+    hike:"Name five letter sounds during play and read aloud for 10 minutes with one question daily.",
+    cherish:"Sing lullabies and folk songs in the mother tongue every evening."
+  },
+  tera:{
+    s:"恩",
+    r:[["thoo-thoo","cynical rejection"],["you-you","appreciation"],["wow-wow","wonder 妙"],["tera-tera","तेरा · All is Yours"]],
+    a:"तेरा-तेरा (Tera-Tera) · Guru Nanak's scale of infinite gratitude",
+    l:[
+      ["Jumble","Thoo-Thoo → You-You (U-phone connection) → Wow-Wow → Tera-Tera (13 = Yours)."],
+      ["Meaning","When ego stops claiming ownership and says 'Tera, Tera,' the stars descend to Earth."]
+    ],
+    poetry:"Weighing every gift as 'Tera, Tera,' the stars of heaven shine in every courtyard.",
+    hike:"Keep one month of essential costs in reserve and share surplus weekly.",
+    cherish:"End each day by naming three gifts received from nature and neighbors."
+  },
+  wonder:{
+    s:"妙",
+    r:[["女","yielding"],["少","subtle"],["miào","妙 · wonder"],["wow","childlike awe"]],
+    a:"妙 Miào · Beginning with Wonder, never with lack",
+    l:[
+      ["Etymology","Chinese 妙 combines yielding openness with subtle perception."],
+      ["Meaning","Do not judge what a person lacks; notice what is alive and possible."]
+    ],
+    poetry:"Wonder opens the door where judgment once stood guard.",
+    hike:"Follow one child's or learner's curiosity question for 10 uninterrupted minutes today.",
+    cherish:"Look at every gap not as a personal failure, but as a bridge waiting to be built."
+  },
+  un:{
+    s:"一",
+    r:[["un","absence / Unknown"],["us","collective"],["sun","un + seed"],["son","child"],["won","whole"],["one","Omkar unity"]],
+    a:"童式 · The Child's Formula from UN to SUN to ONE",
+    l:[
+      ["Jumble","un (negation) → +s = sun → son/daughter → +w = won → one."],
+      ["Meaning","Connecting to the Unknown Sutradhar turns every 'unmet' need into 'One' shared victory."]
+    ],
+    poetry:"Every 'un' has sprouted a seed to become the Sun, and the whole has become One.",
+    hike:"Connect strengths + real need + learnable skill into one small weekly contribution.",
+    cherish:"Bow to the unseen Conductor (Sutradhar) who pours fresh ideas into us every moment."
+  },
+  mother:{
+    s:"母",
+    r:[["mātṛ","मातृ · mother"],["womb","garbha · first school"],["calm","peace"],["new zeal","revibration"]],
+    a:"孕言 · The Mother Principle & The Pregnant Word",
+    l:[
+      ["Etymology","Sanskrit mātṛ, Latin mater, Old English mōdor."],
+      ["Meaning","Bringing the Mother alongside the Father in every sanctuary; protecting maternal calm before and during birth."]
+    ],
+    poetry:"The Mother stands equal in every sanctuary, and her calm womb writes the first code of peace.",
+    hike:"Plan guaranteed rest, daily walks, song, and antenatal care for every expectant mother.",
+    cherish:"Honor women's equal voice and leadership in every religious and civic hall."
+  },
+  gps:{
+    s:"位",
+    r:[["gps","Grounded Position in Stillness"],["still","मैं तो ठहरा हुआ हूँ"],["bina-mann","uninterceptable signal"]],
+    a:"Internal GPS · The child's stillness that needs no satellite",
+    l:[
+      ["Meaning","When asked 'What position are you in?', the child said 'I am standing still'—revealing the cosmic GPS."],
+      ["Jumble","External Satellite GPS ↔ Internal Stillness GPS (uninterceptable guidance)."]
+    ],
+    poetry:"Standing still inside, the child receives direct coordinates that no noise can intercept.",
+    hike:"Sit in complete stillness for 5 minutes each morning to read your internal GPS.",
+    cherish:"Trust quiet intuitive clarity over frantic external comparison."
+  },
+  pilla:{
+    s:"童",
+    r:[["pull","Akarshan attraction"],["pill","synthetic crutch"],["pilla","పిల్ల · fresh child"],["phul","फूल · flower"],["phal","फल · fruit"],["pala","पल · moment"]],
+    a:"Pull → Pill → Pilla → Phul → Phal → Pala",
+    l:[
+      ["Jumble","Cosmic Pull replaces synthetic Pills → nurtures the Pilla (Telugu: child) → blooms as Phul (flower) → ripens as Phal (fruit) in every Pala (moment)."],
+      ["Meaning","Bina-Mann Biodiversity: how plants and calm children turn space signals into healing fruit."]
+    ],
+    poetry:"Drawn by cosmic Pull, every Pilla blooms like a Phul and ripens into healing Phal.",
+    hike:"Plant 3 flowering species for different seasons and cultivate local medicinal herbs.",
+    cherish:"Protect the child's working memory from toxic noise using the Four Monkeys sieve."
+  },
+  dhan:{
+    s:"禅",
+    r:[["dhan","धन · wealth"],["dhyan","ध्यान · attention"],["dhanya","धन्य · grateful"],["dhānya","धान्य · grain"],["lakshya","लक्ष्य · aim"],["lakshmi","लक्ष्मी · abundance"]],
+    a:"Dhan · Dhyan · Dhanya & Lakshya → Lakshmi",
+    l:[
+      ["Jumble","Dhan (wealth) + Dhyan (meditative attention) on Lakshya (aim) = Lakshmi (true abundance) & Dhanya (gratitude/grain)."],
+      ["Meaning","Trillions invested in trees and children's education create Dhanvantari health for all."]
+    ],
+    poetry:"Wealth guided by Dhyan upon the Lakshya ripens into Lakshmi's forest and grateful grain.",
+    hike:"Track every expense for 30 days, compare bank charges, and shift 2 hours weekly to high-value skill.",
+    cherish:"Guarantee safe learning spaces and daily warm meals for children in need."
+  },
+  sap:{
+    s:"पवित्र",
+    r:[["saap","सांप · corporate venom"],["sap","System of Absolute Peace"],["vulture","extraction"],["culture","regeneration"]],
+    a:"Saap → SAP · Choosing Regenerative Culture over Vulture",
+    l:[
+      ["Jumble","Saap (snake of conspiracy) → SAP · Vulture (greed) → Culture (stewardship)."],
+      ["Meaning","Corporations transforming into guardians of soil, workers, and peace."]
+    ],
+    poetry:"The corporate snake has shed its venom for SAP, and culture has replaced the vulture.",
+    hike:"Place one human or tool catalyst at each workflow bottleneck and rest the catalyst.",
+    cherish:"Redesign workplace standards around humane pacing so no worker burns out."
+  },
+  sam:{
+    s:"定",
+    r:[["sam","सम · equal/together"],["same","one root"],["simple","one-fold"],["samay","समय · time"],["samyak","सम्यक् · whole"],["samadhi","समाधि · gathered"]],
+    a:"Sam → Simple → Samay → Samyak → Samadhi (Episode 50)",
+    l:[
+      ["Etymology","PIE *sem- (one/together) gives English same/simple and Sanskrit sam, samay, samyak, samadhi."],
+      ["Meaning","Reverse-engineering life from Episode 50 (age 50 / week 52) makes every today simple and whole."]
+    ],
+    poetry:"Viewed from Episode Fifty, all fifty-two weeks lie simple, Samyak, and gathered in Samadhi.",
+    hike:"Map your 52-week year backward from your Future-Perfect milestone into calm weekly steps.",
+    cherish:"Honor every person's and nation's unique pace without dictatorial force."
+  },
+  taaza:{
+    s:"鲜",
+    r:[["tajik","Tajikistan"],["taaza","ताज़ा · fresh fruit & air"],["mast","मस्त · joyful peace"]],
+    a:"Taaza Khao, Mast Raho · The Tajik Children's Formula",
+    l:[
+      ["Jumble","Tajikistan → Taaza-kistan (Fresh fruit, fresh herbs, fresh air, mast contentment)."],
+      ["Meaning","Even where high-tech resources are scarce, growing fresh food and breathing open air brings immediate liberation."]
+    ],
+    poetry:"Fresh fruit in the hand, fresh herbs in the pot, fresh air in the lungs—life is already whole.",
+    hike:"Grow two food or herbal crops together in one bed and save open-pollinated seed.",
+    cherish:"Choose fresh seasonal produce and joyful sufficiency over restless teasing or envy."
+  },
+  insight:{
+    s:"见",
+    r:[["con.science","knowing together"],["re.spond","answer vs react"],["in.sight","witnessing DNA"]],
+    a:"In.Sight · The Genetic Cold-Fusion Helpline & Pure Merit",
+    l:[
+      ["Jumble","Con-science (shared knowing) + Re-spond (mindful answer) + In-sight (inner seeing)."],
+      ["Meaning","Witnessing ancestral DNA impulses for 1 hour daily and honoring pure ideas regardless of caste or wealth."]
+    ],
+    poetry:"Ancestral storms are witnessed in peace, and pure wisdom shines free of caste or label.",
+    hike:"Hold a daily 1-hour reflection or helpline space to voice and release reactive thoughts.",
+    cherish:"Seat children and elders of all backgrounds together as equals."
+  },
+  "whole.health":{
+    s:"全",
+    r:[["hāl","Old English root"],["whole","unbroken"],["health","vitality"],["heal","restore"],["holy","sacred"]],
+    a:"Whole.Health ↔ Svāsthya (स्वास्थ्य · Abiding in the Self)",
+    l:[
+      ["Etymology","Old English hāl gives whole, health, heal, and holy; Sanskrit svāsthya means standing in one's own self."],
+      ["Meaning","Somatic mastery celebrated at global Child Artist Fairs and non-invasive AR healing."]
+    ],
+    poetry:"Whole, health, heal, and holy are one word: the body and the Earth are one field.",
+    hike:"Seek care early when any symptom lasts over two weeks and log 150 minutes of weekly walk/play.",
+    cherish:"Host non-competitive community showcases where youth share art, yoga, and craft."
+  },
+  "e.arth":{
+    s:"技",
+    r:[["e.arth","earth + essence + artha"],["t.eco","technē + oikos"],["know.logic","jñāna + tarka"],["atom↔atma","uncuttable self"]],
+    a:"E.arth × T.Eco × Know.Logic",
+    l:[
+      ["Jumble","E.arth (Earth + Essence + Artha) · T.Eco (Craft for the House) · Atom (uncuttable matter) ↔ Atma (uncuttable self)."],
+      ["Meaning","Technology and economics redesigned as ecological stewardship."]
+    ],
+    poetry:"Craft serves the planetary house, earning serves Dharma, and Atma shines uncuttable.",
+    hike:"Compare at least two alternatives in every project and keep the one that wastes least.",
+    cherish:"Hold every scientific model lightly, knowing deeper wonder always lies within."
+  },
+  prayer:{
+    s:"祷",
+    r:[["precari","to ask"],["prārthanā","प्रार्थना"],["breath","first yes"],["moksha","valley return"]],
+    a:"Prayer & The Return from the Summit to the Valley",
+    l:[
+      ["Etymology","Sanskrit prārthanā; prayer as the field saying yes to itself."],
+      ["Meaning","At the summit of Moksha, you descend to the valley to love, teach, and rise again as the cloud."]
+    ],
+    poetry:"The summit descends to serve the valley, and the last breath rises again as the first cloud.",
+    hike:"Teach one completed skill or pathway to another person each month.",
+    cherish:"Live in unbroken gratitude—knowing the mountain waking up is you."
+  }
+};
+
+/* ============================================================================
+   INDEXING & RENDER ENGINE
+   ============================================================================ */
+const R = ["I","II","III","IV","V","VI","VII","VIII","IX","X","XI","XII","XIII","XIV","XV","XVI","XVII","XVIII","XIX","XX","XXI","XXII","XXIII","XXIV","XXV","XXVI","XXVII","XXVIII","XXIX","XXX","XXXI","XXXII","XXXIII","XXXIV","XXXV","XXXVI"];
+const TOK = /\[\[([a-z0-9.]+)(?:\|([^\]]+))?\]\]/g;
+const $ = id => document.getElementById(id);
+const main = $('verses'), card = $('card'), soil = $('soil');
+
+let hiked = {};
+try { hiked = JSON.parse(localStorage.getItem('pulse.hiked') || '{}'); } catch(e){}
+
+function saveHike(){
+  try { localStorage.setItem('pulse.hiked', JSON.stringify(hiked)); } catch(e){}
+  updateHikeCounter();
+}
+function updateHikeCounter(){
+  const n = Object.keys(hiked).filter(k => hiked[k]).length;
+  $('hikeCount').textContent = `${n} / ${V.length} Mountains Hiked`;
+}
+
+/* Build occurrence map across both poem lines and story paragraphs */
+const occ = {};
+V.forEach((v, i) => {
+  const combined = v.lines.join(' ') + ' ' + v.story + ' [[' + v.hinge + ']]';
+  combined.replace(TOK, (m, k) => {
+    const fam = FAM[k] || k;
+    const arr = occ[fam] || (occ[fam] = []);
+    if (!arr.includes(i)) arr.push(i);
+    return m;
+  });
+});
+
+/* Build Category Buttons */
+const cats = [...new Set(V.map(v => v.cat))];
+const catsNav = $('cats');
+cats.forEach(c => {
+  const b = document.createElement('button');
+  b.type = 'button';
+  b.textContent = c;
+  b.dataset.cat = c;
+  b.addEventListener('click', () => filterCat(c));
+  catsNav.appendChild(b);
+});
+
+function renderTokens(str){
+  return str.replace(TOK, (m, k, d) => `<button type="button" class="w" data-k="${k}">${d || k}</button>`);
+}
+
+function renderAllVerses(){
+  main.innerHTML = V.map((v, i) => {
+    const n = (i + 1) % V.length;
+    const isHiked = !!hiked[i];
+    return `<section class="verse" id="v${i}" data-c="${v.cat}" data-idx="${i}">
+      <header class="vh">
+        <span class="rn">${R[i]}</span>
+        <span class="cat-tag">${v.cat}</span>
+        <button type="button" class="st ${isHiked ? 'hiked' : ''}" data-hike="${i}">
+          ${isHiked ? '🏔️ Hiked & Cherished' : '○ Mark Hiked'}
+        </button>
+        <span class="ctx-pill" id="ctx-${i}" hidden>↕ Before/After Context</span>
+      </header>
+      <div class="poem-box">
+        ${v.lines.map(t => `<p class="line">${renderTokens(t)}</p>`).join('')}
+      </div>
+      <p class="story-para">${renderTokens(v.story)}</p>
+      <p class="echo">${v.echo}</p>
+      <p class="v-jumble"><span>Sound-Shift:</span> ${v.jumble}</p>
+      <p class="hinge">Hands on: <button type="button" class="w" data-k="${v.hinge}" data-go="${n}">${v.hinge}</button> → Verse ${R[n]}</p>
+    </section>`;
+  }).join('');
+  updateHikeCounter();
+}
+
+renderAllVerses();
+
+/* ============================================================================
+   SIMPLE BOTTOM POPUP CARD + NEXT RELATABLE SENTENCE JUMPER
+   ============================================================================ */
+let currentKey = null;
+
+function jump(i){
+  const el = document.getElementById('v' + i);
+  if (!el) return;
+  if (el.classList.contains('hidden')) {
+    document.querySelectorAll('.verse.hidden').forEach(v => v.classList.remove('hidden'));
+    $('nowCat').textContent = 'All Cantos (Unfiltered for Jump)';
+  }
+  el.scrollIntoView({behavior:'smooth', block:'center'});
+  el.classList.remove('flash');
+  void el.offsetWidth;
+  el.classList.add('flash');
+}
+
+function openCard(rawKey, fromIdx){
+  const fam = FAM[rawKey] || rawKey;
+  const f = F[fam];
+  if (!f) return;
+  currentKey = fam;
+
+  const list = occ[fam] || [0];
+  const curVerse = fromIdx != null ? fromIdx : list[0];
+  const nextVerse = list.find(x => x > curVerse) ?? list[0];
+  const nextLinear = (curVerse + 1) % V.length;
+  const targetJump = list.length > 1 ? nextVerse : nextLinear;
+
+  document.querySelectorAll('.w.hot').forEach(e => e.classList.remove('hot'));
+  document.querySelectorAll('button.w').forEach(b => {
+    const bFam = FAM[b.dataset.k] || b.dataset.k;
+    if (bFam === fam) b.classList.add('hot');
+  });   /* ============================================================
+     COMPLETION OF openCard() — build the card, show it, close fn
+     ============================================================ */
+  const isHiked = !!hiked[curVerse];
+  card.innerHTML = `
+    <div class="ch">
+      <span class="ct"><span class="sym">${f.s}</span> ${rawKey}</span>
+      <button type="button" class="x" id="cardX">Close ✕</button>
+    </div>
+    <div class="ladder">
+      ${f.r.map(([w,d]) => `<span class="step${w.toLowerCase()===rawKey.toLowerCase()?' on':''}">${w}<small>${d}</small></span>`).join('')}
+    </div>
+    <p class="alias">Also: ${f.a}</p>
+    ${f.l.map(([t,x]) => `<p class="lab"><b class="${t}">${t}</b>${x}</p>`).join('')}
+    <div class="goal-achieved">
+      <p class="goal-poetry">"${f.poetry}"</p>
+      <div class="hc-grid">
+        <div class="hc-box hc-hike"><b>🏔️ What to Hike</b>${f.hike}</div>
+        <div class="hc-box hc-cherish"><b>🌱 What to Nourish &amp; Cherish</b>${f.cherish}</div>
+      </div>
+    </div>
+    <p class="appears">Appears in: ${list.map(i => `<button type="button" class="w${i===curVerse?' curr':''}" data-jump="${i}">${R[i]}</button>`).join(' ')}</p>
+    <div class="popup-actions">
+      <button type="button" class="nx" data-jump="${targetJump}">Next Relatable Verse &amp; Sentence → ${R[targetJump]}</button>
+      <button type="button" class="hike-btn ${isHiked?'on':''}" data-hike="${curVerse}">${isHiked ? '🏔️ Hiked &amp; Cherished' : '○ Mark Hiked'}</button>
+    </div>
+  `;
+  card.hidden = false;
+}
+
+/* ============================================================
+   EVENT DELEGATION — one listener for the whole page
+   ============================================================ */
+document.addEventListener('click', e => {
+  const b = e.target.closest('button');
+  if (!b) return;
+
+  // 1. Close the popup card
+  if (b.id === 'cardX') { card.hidden = true; return; }
+
+  // 2. Jump to a verse (from "Appears in" or "Next Relatable Verse")
+  if (b.dataset.jump !== undefined) {
+    jump(+b.dataset.jump);
+    card.hidden = true;
+    return;
+  }
+
+  // 3. Toggle hike state (header button OR card button)
+  if (b.dataset.hike !== undefined) {
+    const i = +b.dataset.hike;
+    hiked[i] = !hiked[i];
+    saveHike();
+    document.querySelectorAll(`[data-hike="${i}"]`).forEach(btn => {
+      btn.classList.toggle('hiked', !!hiked[i]);
+      btn.classList.toggle('on', !!hiked[i]);
+      btn.textContent = hiked[i] ? '🏔️ Hiked & Cherished' : '○ Mark Hiked';
+    });
+    return;
+  }
+
+  // 4. Category filter
+  if (b.dataset.cat) { filterCat(b.dataset.cat); return; }
+
+  // 5. Phonetic jumble strip
+  if (b.dataset.j !== undefined) {
+    document.querySelectorAll('.j-btn').forEach(j => j.classList.remove('on'));
+    b.classList.add('on');
+    const q = b.dataset.j;
+    $('q').value = q;
+    doSearch(q);
+    return;
+  }
+
+  // 6. Clickable gold word in poem or story
+  if (b.dataset.k) {
+    const s = b.closest('.verse');
+    openCard(b.dataset.k, s ? +s.dataset.idx : null);
+  }
+});
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') card.hidden = true;
+});
+
+/* ============================================================
+   SEARCH — matches words + keeps surrounding verses as context
+   ============================================================ */
+function doSearch(q) {
+  const query = q.trim().toLowerCase();
+  if (!query) { filterCat(null); return; }
+
+  const matches = [];
+  V.forEach((v, i) => {
+    const hay = (v.lines.join(' ') + ' ' + v.story + ' ' + v.echo + ' ' + v.jumble + ' ' + v.hinge + ' ' + v.cat).toLowerCase();
+    if (hay.includes(query)) matches.push(i);
+  });
+
+  const matchSet = new Set(matches);
+  const ctxSet = new Set();
+  matches.forEach(i => {
+    if (i > 0 && !matchSet.has(i - 1)) ctxSet.add(i - 1);
+    if (i < V.length - 1 && !matchSet.has(i + 1)) ctxSet.add(i + 1);
+  });
+
+  document.querySelectorAll('.verse').forEach(v => {
+    const i = +v.dataset.idx;
+    const ctx = document.getElementById('ctx-' + i);
+    v.classList.remove('hidden', 'context-adj');
+    if (matchSet.has(i)) {
+      if (ctx) ctx.hidden = true;
+    } else if (ctxSet.has(i)) {
+      v.classList.add('context-adj');
+      if (ctx) ctx.hidden = false;
+    } else {
+      v.classList.add('hidden');
+      if (ctx) ctx.hidden = true;
+    }
+  });
+
+  $('matchStatus').textContent = `${matches.length} match${matches.length === 1 ? '' : 'es'} + context`;
+  $('nowCat').textContent = `Search: "${q}"`;
+  card.hidden = true;
+}
+
+let searchTimer;
+$('q').addEventListener('input', e => {
+  clearTimeout(searchTimer);
+  searchTimer = setTimeout(() => doSearch(e.target.value), 180);
+});
+
+/* ============================================================
+   CATEGORY FILTER
+   ============================================================ */
+function filterCat(c) {
+  document.querySelectorAll('#cats button').forEach(b => {
+    b.classList.toggle('on', b.dataset.cat === c);
+  });
+  document.querySelectorAll('.verse').forEach(v => {
+    if (!c || v.dataset.c === c) {
+      v.classList.remove('hidden', 'context-adj');
+    } else {
+      v.classList.add('hidden');
+    }
+  });
+  document.querySelectorAll('.ctx-pill').forEach(p => p.hidden = true);
+  $('nowCat').textContent = c || 'All Cantos · The Complete Loop';
+  $('matchStatus').textContent = '';
+  card.hidden = true;
+}
+
+/* ============================================================
+   STORY & ECHO TOGGLES
+   ============================================================ */
+let showStory = true;
+let showEcho = true;
+
+$('storyToggle').addEventListener('click', () => {
+  showStory = !showStory;
+  document.body.classList.toggle('hide-story', !showStory);
+  $('storyToggle').textContent = 'Story prose: ' + (showStory ? 'on' : 'off');
+});
+
+$('echoToggle').addEventListener('click', () => {
+  showEcho = !showEcho;
+  document.body.classList.toggle('hide-echo', !showEcho);
+  $('echoToggle').textContent = 'Hindi echo: ' + (showEcho ? 'on' : 'off');
+});
+
+/* ============================================================
+   RESET ALL FILTERS
+   ============================================================ */
+$('resetFilters').addEventListener('click', () => {
+  document.querySelectorAll('#cats button').forEach(b => b.classList.remove('on'));
+  document.querySelectorAll('.verse').forEach(v => v.classList.remove('hidden', 'context-adj'));
+  document.querySelectorAll('.ctx-pill').forEach(p => p.hidden = true);
+  document.querySelectorAll('.j-btn').forEach(j => j.classList.remove('on'));
+  $('q').value = '';
+  $('nowCat').textContent = 'All Cantos · The Complete Loop';
+  $('matchStatus').textContent = '';
+  card.hidden = true;
+});
+
+/* ============================================================
+   NOW-READING TRACKER (Intersection Observer)
+   ============================================================ */
+const io = new IntersectionObserver(es => es.forEach(en => {
+  if (en.isIntersecting && !en.target.classList.contains('hidden')) {
+    $('nowCat').textContent = en.target.dataset.c;
+  }
+}), { rootMargin: '-45% 0px -50% 0px' });
+document.querySelectorAll('.verse').forEach(s => io.observe(s));
+
+/* ============================================================
+   SOIL GRADIENT ON SCROLL
+   ============================================================ */
+addEventListener('scroll', () => {
+  const p = scrollY / Math.max(1, document.documentElement.scrollHeight - innerHeight);
+  soil.style.opacity = Math.min(1, p * 1.4).toFixed(2);
+}, { passive: true });
+
+/* ============================================================
+   INIT — final safety call
+   ============================================================ */
+updateHikeCounter();
+
+</script>
+</body>
+</html>
