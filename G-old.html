@@ -973,244 +973,28 @@
   </style>
 
   
-(() => {
-  const script = document.currentScript;
-  const endpoint = script?.dataset.endpoint;
-  const source = script?.dataset.source || "auto";
-  const apiKey = script?.dataset.apiKey || "";
-
-  const languages = {
-    en: "English",
-    hi: "हिन्दी",
-    te: "తెలుగు",
-    ta: "தமிழ்",
-    kn: "ಕನ್ನಡ",
-    ml: "മലയാളം",
-    mr: "मराठी",
-    bn: "বাংলা",
-    gu: "ગુજરાતી",
-    ur: "اردو",
-    sa: "संस्कृतम्",
-    es: "Español",
-    fr: "Français",
-    de: "Deutsch",
-    ar: "العربية",
-    zh: "中文",
-    ja: "日本語"
-  };
-
-  const style = document.createElement("style");
-  style.textContent = `
-    #earth-language {
-      position:fixed;
-      bottom:18px;
-      right:18px;
-      z-index:999999;
-      background:white;
-      color:#172033;
-      padding:10px;
-      border:1px solid #aaa;
-      border-radius:12px;
-      box-shadow:0 3px 15px #0002;
-      font:14px system-ui;
-    }
-    #earth-language select {
-      padding:9px;
-      max-width:180px;
-      border-radius:7px;
-    }
-    #earth-language button {
-      padding:9px;
-      margin-left:5px;
-      border:0;
-      border-radius:7px;
-      background:#172033;
-      color:white;
-      cursor:pointer;
-    }
-  `;
-  document.head.appendChild(style);
-
-  const box = document.createElement("div");
-  box.id = "earth-language";
-
-  const select = document.createElement("select");
-  select.setAttribute("aria-label", "Choose language");
-
-  const original = new Option("Original", "original");
-  select.add(original);
-
-  Object.entries(languages).forEach(([code, name]) => {
-    select.add(new Option(name, code));
-  });
-
-  const reset = document.createElement("button");
-  reset.textContent = "Reset";
-
-  const status = document.createElement("span");
-  status.setAttribute("aria-live", "polite");
-  status.style.cssText = "display:block;font-size:11px;margin-top:5px";
-
-  box.append(select, reset, status);
-  document.body.appendChild(box);
-
-  const excluded = new Set([
-    "SCRIPT", "STYLE", "NOSCRIPT", "INPUT",
-    "TEXTAREA", "SELECT", "OPTION",
-    "CODE", "PRE", "SVG", "CANVAS"
-  ]);
-
-  let originals = [];
-  let busy = false;
-
-  function collect() {
-    const walker = document.createTreeWalker(
-      document.body,
-      NodeFilter.SHOW_TEXT
-    );
-
-    const nodes = [];
-
-    while (walker.nextNode()) {
-      const node = walker.currentNode;
-      const parent = node.parentElement;
-
-      if (!parent || !node.nodeValue.trim()) continue;
-      if (excluded.has(parent.tagName)) continue;
-      if (parent.closest(
-        "#earth-language,[translate='no'],[contenteditable='true'],[aria-hidden='true']"
-      )) continue;
-
-      nodes.push({
-        node,
-        text: node.nodeValue
-      });
-    }
-
-    return nodes;
-  }
-
-  function saveOriginal() {
-    originals = collect();
-  }
-
-  function restore() {
-    originals.forEach(item => {
-      if (item.node.isConnected) {
-        item.node.nodeValue = item.text;
-      }
-    });
-  }
-
-  async function translateText(text, target) {
-    const payload = {
-      q: text,
-      source,
-      target,
-      format: "text"
-    };
-
-    if (apiKey) payload.api_key = apiKey;
-
-    const response = await fetch(endpoint, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(payload)
-    });
-
-    if (!response.ok) {
-      throw new Error("Translation service error: " + response.status);
-    }
-
-    const data = await response.json();
-
-    if (typeof data.translatedText !== "string") {
-      throw new Error("Invalid translation response");
-    }
-
-    return data.translatedText;
-  }
-
-  async function translatePage(target) {
-    if (busy) return;
-
-    if (!endpoint || endpoint.includes("YOUR-LIBRETRANSLATE")) {
-      status.textContent = "Please configure your translation API.";
-      return;
-    }
-
-    busy = true;
-    select.disabled = true;
-    status.textContent = "Translating…";
-
-    try {
-      restore();
-      saveOriginal();
-
-      const items = originals;
-      let index = 0;
-      let completed = 0;
-
-      async function worker() {
-        while (index < items.length) {
-          const current = index++;
-          const item = items[current];
-
-          try {
-            const result = await translateText(item.text, target);
-
-            if (item.node.isConnected) {
-              item.node.nodeValue = result;
-            }
-          } catch (error) {
-            console.warn("Translation skipped:", error);
-          }
-
-          completed++;
-          status.textContent =
-            `Translating ${completed}/${items.length}`;
-        }
-      }
-
-      await Promise.all([
-        worker(),
-        worker(),
-        worker()
-      ]);
-
-      document.documentElement.lang = target;
-      status.textContent = "Translation complete.";
-
-    } catch (error) {
-      console.error(error);
-      status.textContent = "Translation failed. Check API settings.";
-    } finally {
-      busy = false;
-      select.disabled = false;
-    }
-  }
-
-  select.addEventListener("change", () => {
-    if (select.value === "original") {
-      restore();
-      status.textContent = "Original language restored.";
-    } else {
-      translatePage(select.value);
-    }
-  });
-
-  reset.addEventListener("click", () => {
-    restore();
-    select.value = "original";
-    status.textContent = "Original language restored.";
-  });
-
-  saveOriginal();
-})();
 
 </head>
+  
+<div id="google_translate_element"></div>
+
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement(
+    {
+      pageLanguage: 'en',
+      includedLanguages: 'hi,te,ta,kn,ml,mr,bn,gu,sa',
+      layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+    },
+    'google_translate_element'
+  );
+}
+</script>
+
+<script type="text/javascript"
+src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit">
+</script>
+
 <body>
   <div class="page-grid">
 
